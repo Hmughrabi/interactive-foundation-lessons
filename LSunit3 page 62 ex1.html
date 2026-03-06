@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Vocabulary Quizzes (A1 & Dropdown Edition)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --color-primary: #FF69B4; /* Pink (Word Card Face/Front) */
+            --color-secondary: #00CED1; /* Teal (Quiz 3/4/5 words, Headers) */
+            --color-accent: #FFD700; /* Gold/Yellow */
+            --color-definition-face: #4CAF50; /* Bright Green - Definition Card Face */
+            --color-definition-back: #388E3C; /* Darker Green for flipped content */
+            --color-text: #483D8B; /* Dark Blue/Purple */
+            --bg-light: #F0FFFF; /* Azure */
+            --bg-dark: #FFE4E1; /* Misty Rose */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-light), var(--bg-dark));
+            color: var(--color-text);
+            padding: 40px 20px;
+        }
+
+        .section-header {
+            border-bottom: 4px solid var(--color-primary);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* --- Card Flip Styles (Quiz 1) --- */
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            perspective: 1000px;
+            height: 120px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.1em;
+            line-height: 1.2;
+        }
+
+        .card-front {
+            color: white;
+            z-index: 2;
+        }
+
+        .card[data-is-word="true"] .card-front {
+            background-color: var(--color-primary); 
+        }
+
+        .card[data-is-word="false"] .card-front {
+            background-color: var(--color-definition-face); 
+        }
+        
+        .card-back {
+            background-color: var(--color-definition-back); 
+            color: white;
+            transform: rotateY(180deg);
+        }
+        
+        .card.matched .card-front, .card.matched .card-back {
+            background-color: #008B8B; 
+            color: white;
+        }
+        
+        .card.matched {
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(0, 139, 139, 0.8);
+        }
+        /* --- End Card Flip Styles --- */
+
+        /* --- True/False & Check Buttons (Quiz 2 & 5) --- */
+        .tf-button {
+            transition: background-color 0.2s, transform 0.1s;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .tf-button:hover {
+            transform: translateY(-1px);
+        }
+        .tf-correct { background-color: #2ECC71 !important; color: white !important; } 
+        .tf-incorrect { background-color: #E74C3C !important; color: white !important; }
+        
+        /* --- Dropdown Styles (Quiz 4) --- */
+        .quiz-select {
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 2px solid var(--color-secondary);
+            background-color: white;
+            font-size: 1em;
+            margin: 0 5px;
+        }
+        .dd-feedback-icon {
+            margin-left: 10px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .game-status {
+            min-height: 24px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="max-w-6xl mx-auto space-y-16">
+
+    <h1 class="text-4xl font-extrabold text-center" style="color:var(--color-primary)">Vocabulary Challenge Zone 🧠</h1>
+
+    <!-- QUIZ 4: DROPDOWN GAP FILL (NEW A1 QUIZ) -->
+    <section>
+        <div class="section-header">
+            <h2 class="text-3xl font-bold" style="color:var(--color-secondary)">4. Fill-in-the-Blank Dropdown (Jamila Text) 🤖</h2>
+            <p class="text-lg text-gray-600">Choose the best vocabulary word from the dropdown list to complete the sentences.</p>
+            <p class="game-status mt-2 font-bold text-center text-xl" id="dropdown-status"></p>
+        </div>
+        <div class="space-y-6 text-xl p-6 rounded-xl" style="background-color: #fff3e0;" id="dropdown-questions">
+            <!-- Questions will be injected here by JavaScript -->
+        </div>
+        <div class="text-center mt-8">
+            <button onclick="checkDropdownQuiz()" class="px-8 py-3 rounded-full text-white font-bold text-lg shadow-xl transition transform hover:scale-105" style="background-color: var(--color-secondary);">Check Dropdown Answers</button>
+        </div>
+    </section>
+    
+    <hr>
+    
+    <!-- QUIZ 5: SIMPLE TRUE OR FALSE (NEW A1 QUIZ) -->
+    <section>
+        <div class="section-header">
+            <h2 class="text-3xl font-bold" style="color:var(--color-primary)">5. True or False (Jamila Text) 🤔</h2>
+            <p class="text-lg text-gray-600">Decide if these simple statements about the story are true or false.</p>
+            <p class="game-status mt-2 font-bold text-center text-xl" id="a1-tf-status"></p>
+        </div>
+        <div class="space-y-4" id="a1-tf-questions">
+            <!-- Questions will be injected here by JavaScript -->
+        </div>
+    </section>
+    
+    <hr>
+    
+    <!-- QUIZ 1, 2, 3 (Original Quizzes retained below the new ones) -->
+    <section>
+        <div class="section-header">
+            <h2 class="text-3xl font-bold" style="color:var(--color-secondary)">1. Matching Card Flip 🃏</h2>
+            <p class="text-lg text-gray-600">Find the word (Pink) that matches its definition (Green).</p>
+            <p class="game-status mt-2 font-bold text-center text-xl" id="match-status"></p>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6" id="matching-grid">
+            <!-- Cards will be injected here by JavaScript -->
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <div class="section-header">
+            <h2 class="text-3xl font-bold" style="color:var(--color-primary)">2. True or False (Advanced Vocab) 🤔</h2>
+            <p class="text-lg text-gray-600">Read the statement and decide if it is true or false. Get instant feedback!</p>
+            <p class="game-status mt-2 font-bold text-center text-xl" id="tf-status"></p>
+        </div>
+        <div class="space-y-4" id="tf-questions">
+            <!-- Questions will be injected here by JavaScript -->
+        </div>
+    </section>
+
+    <hr>
+
+    <section>
+        <div class="section-header">
+            <h2 class="text-3xl font-bold" style="color:var(--color-secondary)">3. Fill-in-the-Blank (Drag & Drop) 📝</h2>
+            <p class="text-lg text-gray-600">Drag the words from the bank to complete the sentences.</p>
+            <p class="game-status mt-2 font-bold text-center text-xl" id="dd-status"></p>
+        </div>
+
+        <div class="word-bank flex flex-wrap justify-center gap-4 p-4 mb-8 rounded-xl" style="background-color: #e0f7fa;" id="word-bank">
+            <!-- Words will be injected here by JavaScript -->
+        </div>
+
+        <div class="space-y-6 text-xl p-6 rounded-xl" style="background-color: #fce4ec;" id="sentences-area">
+            <!-- Sentences will be injected here by JavaScript -->
+        </div>
+        
+        <div class="text-center mt-8">
+            <button onclick="checkDragAndDrop()" class="px-8 py-3 rounded-full text-white font-bold text-lg shadow-xl transition transform hover:scale-105" style="background-color: var(--color-primary);">Check Answers</button>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    // VOCABULARY DATA (Glossary)
+    const VOCAB_DATA = [
+        { word: "connect (v)", definition: "to join two things or places together", category: "A", tfStatement: "You can use a bridge to connect two sides of a river.", tfAnswer: true },
+        { word: "control (v)", definition: "to limit the number, amount or increase of something", category: "B", tfStatement: "If you control your spending, you buy everything you see.", tfAnswer: false },
+        { word: "device (n)", definition: "a piece of equipment that is used for a particular purpose", category: "C", tfStatement: "A smartphone is a type of electronic device.", tfAnswer: true },
+        { word: "expiration date (n)", definition: "the end of a period when something can be used", category: "D", tfStatement: "After the expiration date, food is usually still safe to eat.", tfAnswer: false },
+        { word: "sensor (n)", definition: "a piece of equipment that can find heat, light, etc.", category: "E", tfStatement: "A temperature sensor measures how loud a sound is.", tfAnswer: false },
+        { word: "waste (n)", definition: "a bad use of something useful", category: "F", tfStatement: "Letting the water run while brushing your teeth is an example of waste.", tfAnswer: true }
+    ];
+    
+    // VOCABULARY DATA (Jamila Text - Colored Words)
+    const JAMILA_VOCAB = [
+        { word: "accident", options: ["party", "accident", "meeting"], answer: "accident", definition: "An unpleasant event that happens unexpectedly and causes damage or injury." },
+        { word: "disability", options: ["job", "holiday", "disability"], answer: "disability", definition: "A physical or mental condition that limits a person's movements, senses, or activities." },
+        { word: "look after", options: ["clean", "look after", "forget"], answer: "look after", definition: "To take care of someone or something." },
+        { word: "robot assistant", options: ["teacher", "car", "robot assistant"], answer: "robot assistant", definition: "A machine designed to help a person with tasks." },
+        { word: "research", options: ["research", "sleep", "sing"], answer: "research", definition: "The systematic investigation into materials and sources to establish facts and reach new conclusions." },
+        { word: "information", options: ["money", "information", "food"], answer: "information", definition: "Facts provided or learned about something or someone." },
+        { word: "developed", options: ["developed", "lost", "stopped"], answer: "developed", definition: "To grow or evolve; to create something new." }
+    ];
+
+    // --- QUIZ 4: DROPDOWN GAP FILL LOGIC (NEW) ---
+    const DD_QUESTIONS = [
+        { id: 1, sentence: "Jamila was in an ____________ when a car hit her.", correct: "accident", distractors: ["party", "meeting"] },
+        { id: 2, sentence: "Because of her ____________, she uses a wheelchair.", correct: "disability", distractors: ["job", "holiday"] },
+        { id: 3, sentence: "Her robot helps to ____________ her and carry things.", correct: "look after", distractors: ["clean", "forget"] },
+        { id: 4, sentence: "She has a small ____________ that helps her at home.", correct: "robot assistant", distractors: ["teacher", "car"] },
+        { id: 5, sentence: "Jamila did ____________ to learn how to make better robots.", correct: "research", distractors: ["sleep", "sing"] },
+        { id: 6, sentence: "She asked people for ____________ about what they needed.", correct: "information", distractors: ["money", "food"] },
+        { id: 7, sentence: "Jamila ____________ a robot that can cook simple food.", correct: "developed", distractors: ["lost", "stopped"] }
+    ];
+
+    function initializeDropdownQuiz() {
+        const container = document.getElementById('dropdown-questions');
+        container.innerHTML = '';
+        
+        DD_QUESTIONS.forEach(q => {
+            const wordOptions = shuffleArray([q.correct, ...q.distractors]);
+            const id = `ddq-${q.id}`;
+            
+            // Create the dropdown HTML string
+            let selectOptions = wordOptions.map(word => 
+                `<option value="${word}">${word}</option>`
+            ).join('');
+            
+            const questionText = q.sentence.replace('____________', 
+                `<select id="${id}" class="quiz-select" data-correct="${q.correct}">
+                    <option value="">-- Choose Word --</option>
+                    ${selectOptions}
+                </select>`
+            );
+
+            const qElement = document.createElement('p');
+            qElement.classList.add('flex', 'items-center', 'flex-wrap');
+            qElement.innerHTML = `
+                <span class="font-bold mr-2" style="color:var(--color-primary)">${q.id}.</span> ${questionText}
+                <span class="dd-feedback-icon" id="feedback-${id}"></span>
+            `;
+            container.appendChild(qElement);
+        });
+
+        document.getElementById('dropdown-status').textContent = `Ready to check!`;
+    }
+
+    function checkDropdownQuiz() {
+        let correctCount = 0;
+        const totalQuestions = DD_QUESTIONS.length;
+        
+        DD_QUESTIONS.forEach(q => {
+            const id = `ddq-${q.id}`;
+            const selectElement = document.getElementById(id);
+            const feedbackIcon = document.getElementById(`feedback-${id}`);
+            
+            const isCorrect = selectElement.value === selectElement.dataset.correct;
+
+            if (isCorrect) {
+                feedbackIcon.innerHTML = '✅';
+                feedbackIcon.classList.remove('text-red-600');
+                feedbackIcon.classList.add('text-green-600');
+                correctCount++;
+            } else {
+                feedbackIcon.innerHTML = '❌';
+                feedbackIcon.classList.remove('text-green-600');
+                feedbackIcon.classList.add('text-red-600');
+            }
+        });
+        
+        document.getElementById('dropdown-status').textContent = `Score: ${correctCount}/${totalQuestions}.`;
+        if (correctCount === totalQuestions) {
+            document.getElementById('dropdown-status').textContent = "Quiz Complete! Perfect Score! 🎉";
+        }
+    }
+
+    // --- QUIZ 5: A1 TRUE OR FALSE LOGIC (NEW) ---
+    const A1_TF_QUESTIONS = [
+        { id: 1, statement: "Jamila was 25 years old when she had the accident.", answer: true },
+        { id: 2, statement: "The accident happened because the weather was sunny.", answer: false, explanation: "The text says the weather was **bad** and a car hit her." },
+        { id: 3, statement: "After the hospital, Jamila could walk well.", answer: false, explanation: "After the hospital, she **couldn't walk** and used a wheelchair." },
+        { id: 4, statement: "Jamila's small robot carries things for her.", answer: true },
+        { id: 5, statement: "Jamila is a teacher.", answer: false, explanation: "Jamila is an **engineer**, not a teacher." },
+        { id: 6, statement: "She wants to make robots that can cook complex food.", answer: false, explanation: "She developed a robot that could cook **simple food**." },
+        { id: 7, statement: "She asked other people for help to make a better robot.", answer: true }
+    ];
+
+    function initializeA1TrueFalseQuiz() {
+        const container = document.getElementById('a1-tf-questions');
+        container.innerHTML = '';
+        
+        A1_TF_QUESTIONS.forEach((item, index) => {
+            const qElement = document.createElement('div');
+            qElement.classList.add('bg-white', 'p-5', 'rounded-xl', 'shadow-md', 'flex', 'flex-wrap', 'justify-between', 'items-center', 'text-lg', 'font-medium');
+            qElement.dataset.correct = item.answer;
+            qElement.dataset.answered = 'false';
+            qElement.dataset.explanation = item.explanation || "That is correct!";
+
+            qElement.innerHTML = `
+                <div class="flex-grow w-full md:w-3/4 mb-3">
+                    <span class="text-xl font-bold mr-3" style="color:var(--color-secondary)">${index + 1}.</span> 
+                    ${item.statement}
+                </div>
+                <div class="space-x-4 flex-shrink-0">
+                    <button class="tf-button bg-green-500 text-white px-6 py-2 rounded-lg" data-choice="true" onclick="checkA1TrueFalse(this)">True</button>
+                    <button class="tf-button bg-red-500 text-white px-6 py-2 rounded-lg" data-choice="false" onclick="checkA1TrueFalse(this)">False</button>
+                </div>
+                <div class="tf-feedback text-base mt-4 pt-4 border-t border-gray-200 hidden w-full text-left" style="color: var(--color-text);"></div>
+            `;
+            container.appendChild(qElement);
+        });
+        
+        document.getElementById('a1-tf-status').textContent = `Score: 0/${A1_TF_QUESTIONS.length}`;
+    }
+
+    function checkA1TrueFalse(button) {
+        const questionElement = button.closest('[data-correct]');
+        if (questionElement.dataset.answered === 'true') return;
+
+        const isCorrectAnswer = questionElement.dataset.correct === button.dataset.choice;
+        const buttons = questionElement.querySelectorAll('.tf-button');
+        const feedbackElement = questionElement.querySelector('.tf-feedback');
+        
+        buttons.forEach(btn => btn.disabled = true);
+        questionElement.dataset.answered = 'true';
+
+        let feedbackMessage = '';
+        
+        if (isCorrectAnswer) {
+            button.classList.add('tf-correct');
+            feedbackMessage = `<span class="font-extrabold text-green-700">Correct! 🎉</span>`;
+        } else {
+            button.classList.add('tf-incorrect');
+            questionElement.querySelector(`[data-choice="${questionElement.dataset.correct}"]`).classList.add('tf-correct');
+            
+            const correctText = questionElement.dataset.correct === 'true' ? 'True' : 'False';
+            
+            feedbackMessage = `<span class="font-extrabold text-red-700">Incorrect. ❌</span> The answer is **${correctText}**. 
+                                <span class="font-bold italic">${questionElement.dataset.explanation}</span>`;
+        }
+        
+        feedbackElement.innerHTML = feedbackMessage;
+        feedbackElement.classList.remove('hidden');
+
+        updateA1TFScore();
+    }
+    
+    function updateA1TFScore() {
+        const questions = document.querySelectorAll('#a1-tf-questions > div');
+        let correct = 0;
+        questions.forEach(q => {
+            if (q.dataset.answered === 'true') {
+                const choice = q.querySelector('.tf-correct')?.dataset.choice;
+                if (choice === q.dataset.correct) {
+                    correct++;
+                }
+            }
+        });
+        document.getElementById('a1-tf-status').textContent = `Score: ${correct}/${questions.length}`;
+        if (correct === questions.length) {
+            document.getElementById('a1-tf-status').textContent = "Quiz Complete! Perfect Score! 🎉";
+        }
+    }
+
+
+    // --- QUIZ 1, 2, 3 (Previous Logic Retained) ---
+    // (This section contains the logic for Quizzes 1, 2, and 3 which remains unchanged)
+    
+    let flippedCards = [];
+    let matchesFound = 0;
+    const TOTAL_MATCHES = VOCAB_DATA.length; 
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function initializeMatchingQuiz() {
+        const matchingData = [];
+        VOCAB_DATA.forEach(item => {
+            matchingData.push({ content: item.word, category: item.category, isWord: true });
+            matchingData.push({ content: item.definition, category: item.category, isWord: false });
+        });
+        
+        const shuffledCards = shuffleArray(matchingData);
+        const grid = document.getElementById('matching-grid');
+        grid.innerHTML = ''; 
+
+        shuffledCards.forEach((cardData, index) => {
+            const card = document.createElement('div');
+            card.classList.add('card', 'p-2');
+            card.dataset.category = cardData.category;
+            card.dataset.index = index;
+            card.dataset.isWord = cardData.isWord; 
+            card.onclick = () => flipCard(card);
+
+            const frontText = cardData.isWord ? cardData.content.split(' ')[0] : 'Definition';
+
+            card.innerHTML = `
+                <div class="card-inner">
+                    <div class="card-front"><p>${frontText}</p></div>
+                    <div class="card-back"><p class="text-xs sm:text-sm">${cardData.content}</p></div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+        document.getElementById('match-status').textContent = `Matches: 0/${TOTAL_MATCHES}`;
+    }
+
+    function flipCard(card) {
+        if (card.classList.contains('flipped') || card.classList.contains('matched') || flippedCards.length === 2) {
+            return;
+        }
+
+        card.classList.add('flipped');
+        flippedCards.push(card);
+
+        if (flippedCards.length === 2) {
+            checkForMatch();
+        }
+    }
+
+    function checkForMatch() {
+        const [card1, card2] = flippedCards;
+        
+        const isSameCategory = card1.dataset.category === card2.dataset.category;
+        const isOneWordOneDef = card1.dataset.isWord !== card2.dataset.isWord;
+
+        if (isSameCategory && isOneWordOneDef) {
+            card1.classList.add('matched');
+            card2.classList.add('matched');
+            matchesFound++;
+            document.getElementById('match-status').textContent = `Matches: ${matchesFound}/${TOTAL_MATCHES}`;
+
+            if (matchesFound === TOTAL_MATCHES) {
+                document.getElementById('match-status').textContent = "Quiz Complete! Excellent work! 🎉";
+            }
+            flippedCards = []; 
+        } else {
+            setTimeout(() => {
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+                flippedCards = [];
+            }, 1000);
+        }
+    }
+
+    // --- QUIZ 2: TRUE OR FALSE LOGIC (With instant feedback) ---
+    function initializeTrueFalseQuiz() {
+        const tfQuestions = shuffleArray([...VOCAB_DATA]);
+        const container = document.getElementById('tf-questions');
+        container.innerHTML = '';
+        
+        tfQuestions.forEach((item, index) => {
+            const qElement = document.createElement('div');
+            
+            qElement.classList.add('bg-white', 'p-5', 'rounded-xl', 'shadow-md', 'flex', 'flex-wrap', 'justify-between', 'items-center', 'text-lg', 'font-medium');
+            qElement.dataset.correct = item.tfAnswer;
+            qElement.dataset.answered = 'false';
+            
+            qElement.dataset.word = item.word.split(' ')[0];
+            qElement.dataset.definition = item.definition;
+
+            qElement.innerHTML = `
+                <div class="flex-grow w-full md:w-3/4 mb-3">
+                    <span class="text-xl font-bold mr-3" style="color:var(--color-secondary)">${index + 1}.</span> 
+                    The word **${item.word.split(' ')[0]}** is correctly used here: 
+                    "${item.tfStatement}"
+                </div>
+                <div class="space-x-4 flex-shrink-0">
+                    <button class="tf-button bg-green-500 text-white px-6 py-2 rounded-lg" data-choice="true" onclick="checkQuiz2TrueFalse(this)">True</button>
+                    <button class="tf-button bg-red-500 text-white px-6 py-2 rounded-lg" data-choice="false" onclick="checkQuiz2TrueFalse(this)">False</button>
+                </div>
+                <div class="tf-feedback text-base mt-4 pt-4 border-t border-gray-200 hidden w-full text-left" style="color: var(--color-text);"></div>
+            `;
+            container.appendChild(qElement);
+        });
+        
+        document.getElementById('tf-status').textContent = `Score: 0/${tfQuestions.length}`;
+    }
+
+    function checkQuiz2TrueFalse(button) {
+        const questionElement = button.closest('[data-correct]');
+        if (questionElement.dataset.answered === 'true') return;
+
+        const isCorrectAnswer = questionElement.dataset.correct === button.dataset.choice;
+        const buttons = questionElement.querySelectorAll('.tf-button');
+        const feedbackElement = questionElement.querySelector('.tf-feedback');
+        
+        const word = questionElement.dataset.word;
+        const definition = questionElement.dataset.definition;
+        
+        buttons.forEach(btn => btn.disabled = true);
+        questionElement.dataset.answered = 'true';
+
+        let feedbackMessage = '';
+        
+        if (isCorrectAnswer) {
+            button.classList.add('tf-correct');
+            feedbackMessage = `<span class="font-extrabold text-green-700">Correct! 🎉</span>`;
+        } else {
+            button.classList.add('tf-incorrect');
+            questionElement.querySelector(`[data-choice="${questionElement.dataset.correct}"]`).classList.add('tf-correct');
+            
+            const correctText = questionElement.dataset.correct === 'true' ? 'True' : 'False';
+            
+            feedbackMessage = `<span class="font-extrabold text-red-700">Incorrect. ❌</span> The answer is actually **${correctText}**. 
+                                Remember, the correct definition of **${word}** is: <span class="font-bold italic">${definition}</span>.`;
+        }
+        
+        feedbackElement.innerHTML = feedbackMessage;
+        feedbackElement.classList.remove('hidden');
+
+        updateQuiz2TFScore();
+    }
+
+    function updateQuiz2TFScore() {
+        const questions = document.querySelectorAll('#tf-questions > div');
+        let correct = 0;
+        questions.forEach(q => {
+            if (q.dataset.answered === 'true') {
+                const choice = q.querySelector('.tf-correct')?.dataset.choice;
+                if (choice === q.dataset.correct) {
+                    correct++;
+                }
+            }
+        });
+        document.getElementById('tf-status').textContent = `Score: ${correct}/${questions.length}`;
+        if (correct === questions.length) {
+            document.getElementById('tf-status').textContent = "Quiz Complete! Perfect Score! 🎉";
+        }
+    }
+
+    // --- QUIZ 3: DRAG AND DROP LOGIC ---
+    const ddSentences = [
+        { sentence: "Use an adapter to <span data-answer='connect' class='drop-target'></span> the laptop to the screen.", answer: "connect" },
+        { sentence: "Governments work to <span data-answer='control' class='drop-target'></span> the spread of disease.", answer: "control" },
+        { sentence: "My favorite electronic <span data-answer='device' class='drop-target'></span> is my smart watch.", answer: "device" },
+        { sentence: "Check the <span data-answer='expiration' class='drop-target'></span> date before you drink the milk.", answer: "expiration" },
+        { sentence: "The motion <span data-answer='sensor' class='drop-target'></span> turns the hallway light on automatically.", answer: "sensor" },
+        { sentence: "Letting the water run while brushing your teeth is a huge <span data-answer='waste' class='drop-target'></span>.", answer: "waste" }
+    ];
+
+    function initializeDragAndDropQuiz() {
+        const sentencesContainer = document.getElementById('sentences-area');
+        const bankContainer = document.getElementById('word-bank');
+        sentencesContainer.innerHTML = '';
+        bankContainer.innerHTML = '';
+
+        const uniqueWords = [...new Set(VOCAB_DATA.map(item => item.word.split(' ')[0]))];
+
+        const bankWords = shuffleArray(uniqueWords);
+        bankWords.forEach(word => {
+            const wordElement = document.createElement('div');
+            wordElement.classList.add('word-bank-item');
+            wordElement.textContent = word;
+            wordElement.setAttribute('draggable', true);
+            wordElement.dataset.word = word;
+            wordElement.addEventListener('dragstart', handleDragStart);
+            bankContainer.appendChild(wordElement);
+        });
+
+        ddSentences.forEach((item, index) => {
+            const sentenceElement = document.createElement('p');
+            sentenceElement.innerHTML = `<span class="font-bold text-xl mr-2" style="color:var(--color-primary)">${index + 1}.</span> ${item.sentence.replace('expiration date', 'expiration')}`; 
+            sentencesContainer.appendChild(sentenceElement);
+        });
+
+        document.querySelectorAll('.drop-target').forEach(target => {
+            target.addEventListener('dragover', handleDragOver);
+            target.addEventListener('dragleave', handleDragLeave);
+            target.addEventListener('drop', handleDrop);
+        });
+        document.getElementById('dd-status').textContent = `Ready to play!`;
+    }
+
+    let draggedWord = null;
+
+    function handleDragStart(e) {
+        draggedWord = e.target;
+        e.dataTransfer.setData('text/plain', e.target.dataset.word);
+        setTimeout(() => e.target.classList.add('opacity-50'), 0);
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault(); 
+        if (e.target.classList.contains('drop-target') && !e.target.classList.contains('filled')) {
+            e.target.classList.add('hover');
+        }
+    }
+
+    function handleDragLeave(e) {
+        e.target.classList.remove('hover');
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        const target = e.target;
+
+        if (target.classList.contains('drop-target') && !target.classList.contains('filled') && draggedWord) {
+            target.classList.remove('hover');
+            
+            if (draggedWord.parentNode) {
+                const prevTarget = draggedWord.parentNode;
+                if (prevTarget.classList.contains('drop-target')) {
+                    prevTarget.classList.remove('filled');
+                    prevTarget.innerHTML = ''; 
+                }
+            }
+            
+            draggedWord.classList.remove('opacity-50');
+            
+            target.classList.add('filled');
+            target.innerHTML = ''; 
+            target.appendChild(draggedWord);
+        }
+    }
+
+    function checkDragAndDrop() {
+        const placeholders = document.querySelectorAll('.drop-target');
+        let correctCount = 0;
+        
+        placeholders.forEach(target => {
+            const wordElement = target.querySelector('.word-bank-item');
+            if (!wordElement) return;
+
+            const correctAnswer = target.dataset.answer;
+            const userWord = wordElement.dataset.word;
+
+            wordElement.style.backgroundColor = ''; 
+            wordElement.style.color = 'white';
+
+            if (userWord.includes(correctAnswer)) { 
+                wordElement.style.backgroundColor = '#2ECC71';
+                correctCount++;
+            } else {
+                wordElement.style.backgroundColor = '#E74C3C';
+            }
+        });
+
+        const totalGaps = placeholders.length;
+        document.getElementById('dd-status').textContent = `Score: ${correctCount}/${totalGaps}. Try to get them all correct!`;
+        if (correctCount === totalGaps) {
+            document.getElementById('dd-status').textContent = "Drag & Drop Complete! Perfect Score! 🎉";
+        }
+    }
+
+
+    // --- INITIALIZATION ---
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeDropdownQuiz(); // NEW QUIZ 4
+        initializeA1TrueFalseQuiz(); // NEW QUIZ 5
+        initializeMatchingQuiz();
+        initializeTrueFalseQuiz();
+        initializeDragAndDropQuiz();
+    });
+
+</script>
+
+</body>
+</html>

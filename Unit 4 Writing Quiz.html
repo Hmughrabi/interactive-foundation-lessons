@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tehran Weather: Advanced Interactive ESL Quizzes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* --- General Setup & Thematic Colors --- */
+        :root {
+            --color-primary: #007bff; /* Vibrant Blue for Action/Focus */
+            --color-secondary: #28a745; /* Green for Success */
+            --color-danger: #dc3545; /* Red for Error */
+            --color-bg-light: #e9ecef; /* Light Gray Background */
+            --color-card-bg: #ffffff; /* Card Background */
+            --color-text-dark: #343a40; /* Dark Text */
+            --color-shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, var(--color-bg-light) 100%);
+            color: var(--color-text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background-color: var(--color-card-bg);
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--color-shadow);
+        }
+
+        /* --- Global Headings --- */
+        h1, h2, h3 { color: var(--color-primary); font-weight: 700; margin-top: 0; }
+        
+        /* --- Stage Management (Tabs/Buttons) --- */
+        #lesson-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab-button {
+            flex-grow: 1;
+            padding: 15px 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border: none;
+            background-color: transparent;
+            color: #6c757d;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-button.active {
+            color: var(--color-primary);
+            border-bottom: 3px solid var(--color-primary);
+            background-color: #f8f9fa;
+        }
+
+        /* --- Content/Stage Cards --- */
+        .stage-content {
+            padding: 20px;
+            border-radius: 8px;
+            display: none; /* Hidden by default */
+        }
+        
+        .stage-content.active {
+            display: block;
+        }
+
+        /* --- Shared Quiz Styles --- */
+        .question-box {
+            background-color: #f8f9fa;
+            border-left: 5px solid var(--color-primary);
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: 700;
+        }
+
+        .feedback.success { background-color: #d4edda; color: var(--color-secondary); }
+        .feedback.error { background-color: #f8d7da; color: var(--color-danger); }
+        .feedback.info { background-color: #cce5ff; color: var(--color-primary); }
+
+        /* --- Classification Quiz Styles (Stage 1) --- */
+        .option-button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: 2px solid var(--color-primary);
+            border-radius: 25px;
+            background-color: white;
+            color: var(--color-primary);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .option-button:hover { background-color: var(--color-primary); color: white; }
+        .option-button.correct { background-color: var(--color-secondary); border-color: var(--color-secondary); color: white; }
+        .option-button.incorrect { background-color: var(--color-danger); border-color: var(--color-danger); color: white; }
+
+        /* --- Gap-Fill Quiz Styles (Stage 2) --- */
+        .gap-sentence {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .gap-input {
+            width: 150px;
+            padding: 8px;
+            margin: 0 5px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1em;
+        }
+
+        .gap-input.correct { border-color: var(--color-secondary); background-color: #e6ffe6; }
+        .gap-input.incorrect { border-color: var(--color-danger); background-color: #ffe6e6; }
+        
+        /* --- True/False Quiz Styles (Stage 3) --- */
+        .tf-option {
+            margin: 0 10px;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .tf-option:hover { opacity: 0.8; }
+        .tf-option[data-value="True"] { background-color: #e0f7fa; color: #00bcd4; }
+        .tf-option[data-value="False"] { background-color: #fff3e0; color: #ff9800; }
+
+        /* --- Button for Next Stage --- */
+        .next-stage-button {
+            display: none;
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* --- Content Reveal (from previous answer) --- */
+        .sentence-reveal {
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            font-style: italic;
+            background-color: #fffbe6;
+            border-left: 4px solid #ffc107;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .sentence-reveal.show {
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1><i class="fas fa-meteor"></i> Tehran Weather: The ESL Interactive Challenge <i class="fas fa-bolt"></i></h1>
+        
+        <div id="lesson-tabs">
+            <button class="tab-button active" data-stage="intro"><i class="fas fa-book-reader"></i> Introduction</button>
+            <button class="tab-button" data-stage="quiz1"><i class="fas fa-sort-amount-up"></i> Quiz 1: Classification</button>
+            <button class="tab-button" data-stage="quiz2"><i class="fas fa-pencil-alt"></i> Quiz 2: Gap-Fill</button>
+            <button class="tab-button" data-stage="quiz3"><i class="fas fa-check-double"></i> Quiz 3: True/False</button>
+        </div>
+
+        <div id="stage-intro" class="stage-content active">
+            <h2><i class="fas fa-chart-bar"></i> Explore the Weather Data (B1 Text)</h2>
+            <div id="text-display" style="min-height: 250px; background-color: #f0f8ff; padding: 15px; border-radius: 8px;">
+                </div>
+            <button id="next-button" style="display: block; width: 100%; padding: 15px; background-color: var(--color-primary); color: white; border: none; border-radius: 8px; font-size: 1.2em; font-weight: 700; cursor: pointer;"><i class="fas fa-angle-double-right"></i> Start Reading: Show Next Sentence</button>
+        </div>
+
+        <div id="stage-quiz1" class="stage-content">
+            <h2><i class="fas fa-layer-group"></i> Quiz 1: Classify the Data</h2>
+            <p>Read the statement and click the button to show if the data is about **Rain** or **Temperature**.</p>
+            <div id="q1-quiz-area">
+                </div>
+            <div id="q1-feedback" class="feedback info">Complete the quiz to continue.</div>
+            <button id="q1-next-stage" class="next-stage-button" onclick="showStage('quiz2')">Go to Quiz 2: Gap-Fill <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div id="stage-quiz2" class="stage-content">
+            <h2><i class="fas fa-font"></i> Quiz 2: Vocabulary and Grammar Gap-Fill</h2>
+            <p>Type the correct word from the text to complete the sentences. Pay attention to grammar!</p>
+            <div id="q2-quiz-area">
+                <div class="question-box">
+                    <p class="gap-sentence">1. The amount of rain goes <span style="color:var(--color-primary);">__</span> to 2 mm in June and July.</p>
+                    <input type="text" class="gap-input" id="q2-1" data-answer="down" placeholder="Verb">
+                </div>
+                <div class="question-box">
+                    <p class="gap-sentence">2. The temperature in March is <span style="color:var(--color-primary);">__</span> same as in November.</p>
+                    <input type="text" class="gap-input" id="q2-2" data-answer="the" placeholder="Article">
+                </div>
+                <div class="question-box">
+                    <p class="gap-sentence">3. August is <span style="color:var(--color-primary);">__</span> than October.</p>
+                    <input type="text" class="gap-input" id="q2-3" data-answer="warmer" placeholder="Comparative Adj">
+                </div>
+                <div class="question-box">
+                    <p class="gap-sentence">4. December is the <span style="color:var(--color-primary);">__</span> month.</p>
+                    <input type="text" class="gap-input" id="q2-4" data-answer="wettest" placeholder="Superlative Adj">
+                </div>
+            </div>
+            <button class="next-stage-button" onclick="checkGapFillAnswers()" style="display: block; margin-top: 0;"><i class="fas fa-check"></i> Check Gap-Fill Answers</button>
+            <div id="q2-feedback" class="feedback info"></div>
+            <button id="q2-next-stage" class="next-stage-button" onclick="showStage('quiz3')">Go to Quiz 3: True/False <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div id="stage-quiz3" class="stage-content">
+            <h2><i class="fas fa-clipboard-check"></i> Quiz 3: True or False Comprehension</h2>
+            <p>Decide if the statements below are **True** or **False** based on the text.</p>
+            <div id="q3-quiz-area">
+                </div>
+            <div id="q3-feedback" class="feedback info"></div>
+            <div id="final-score" style="margin-top: 30px; font-size: 1.5em; text-align: center; color: var(--color-primary);"></div>
+        </div>
+
+        <div class="lists-section" style="margin-top: 50px; border-top: 1px solid #ccc; padding-top: 20px;">
+             <h2><i class="fas fa-list"></i> Key Vocabulary Review</h2>
+             <div style="display: flex; gap: 20px;">
+                <div style="flex: 1; padding: 15px; border-radius: 8px; background-color: #e6e6fa;">
+                    <h3>Verbs & Phrasal Verbs</h3>
+                    <ul>
+                        <li><i class="fas fa-arrow-up"></i> **gets up** (reaches)</li>
+                        <li><i class="fas fa-arrow-down"></i> **goes down** (drops)</li>
+                        <li><i class="fas fa-tint"></i> **often rains** (action)</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; padding: 15px; border-radius: 8px; background-color: #e0f7fa;">
+                    <h3>Comparatives & Superlatives</h3>
+                    <ul>
+                        <li><i class="fas fa-plus"></i> **the most / the least**</li>
+                        <li><i class="fas fa-balance-scale-left"></i> **less rain than**</li>
+                        <li><i class="fas fa-balance-scale-right"></i> **more rain than**</li>
+                        <li><i class="fas fa-equals"></i> **the same as**</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // B1 Text Sentences
+        const sentences = [
+            { text: '<i class="fas fa-globe"></i> The graphs give us information about <strong>rain</strong> and <strong>heat</strong> in <strong>Tehran</strong> for one year.', type: 'GENERAL' },
+            { text: '<i class="fas fa-chart-area"></i> The **bar chart** first shows the <strong>average rain</strong> in millimeters.', type: 'RAIN' },
+            { text: '<i class="fas fa-cloud-showers-heavy"></i> The time with <strong>the most rain</strong> is <strong>December</strong>.', type: 'RAIN' },
+            { text: 'It gets up to <strong>40 mm</strong>. <strong>December</strong> is the <strong>wettest month</strong>.', type: 'RAIN' },
+            { text: '<i class="fas fa-sun"></i> The time with <strong>the least rain</strong> is <strong>June and July</strong>.', type: 'RAIN' },
+            { text: 'The amount goes down to <strong>2 mm</strong>. <strong>June and July</strong> are the <strong>driest months</strong>.', type: 'RAIN' },
+            { text: '<i class="fas fa-balance-scale"></i> <strong>July</strong> has less rain **than August**. Also, **November** has more rain **than September**.', type: 'RAIN' },
+            { text: '<i class="fas fa-chart-line"></i> Next, the **line graph** shows the <strong>average temperature</strong> in degrees Celsius.', type: 'TEMP' },
+            { text: '<i class="fas fa-fire-alt"></i> The <strong>highest temperature</strong> is in <strong>July</strong>, reaching **40 °C**.', type: 'TEMP' },
+            { text: '<strong>July</strong> is the <strong>hottest month</strong>.', type: 'TEMP' },
+            { text: '<i class="fas fa-snowflake"></i> The <strong>lowest temperature</strong> is in <strong>January, February, and December</strong>.', type: 'TEMP' },
+            { text: 'It drops to <strong>10 °C</strong>. These months are <strong>the coldest</strong>.', type: 'TEMP' },
+            { text: '<i class="fas fa-exchange-alt"></i> <strong>August</strong> is warmer **than October**. The temperature in <strong>March</strong> is **the same** as in <strong>November**.', type: 'TEMP' },
+            { text: '<i class="fas fa-exclamation-triangle"></i> **In general**, <strong>Tehran</strong> has <strong>very hot</strong> weather in <strong>July</strong>. Sometimes, there are <strong>heatwaves</strong>.', type: 'GENERAL' },
+            { text: '<i class="fas fa-suitcase"></i> The <strong>best time to visit</strong> the city is <strong>March and November</strong> because the weather is pleasantly **warm** and it **often rains**.', type: 'GENERAL' }
+        ];
+
+        // Quiz Data
+        const quiz1Questions = [
+            { statement: "The temperature in March is the same as in November.", answer: "TEMP", ref: 13 },
+            { statement: "June and July are the driest months.", answer: "RAIN", ref: 6 },
+            { statement: "December is the wettest month.", answer: "RAIN", ref: 4 },
+            { statement: "The hottest month is July.", answer: "TEMP", ref: 10 }
+        ];
+
+        const quiz3Questions = [
+            { statement: "The amount of rain in Tehran never goes below 10 mm.", answer: false, ref: 5 },
+            { statement: "January and December have the lowest recorded temperatures.", answer: true, ref: 11 },
+            { statement: "September has more rain than November.", answer: false, ref: 7 },
+            { statement: "July is the best time to visit because the weather is very hot.", answer: false, ref: 14 }
+        ];
+
+        // --- GLOBAL STATE ---
+        let currentSentenceIndex = 0;
+        let q1Score = 0;
+        let q1Total = quiz1Questions.length;
+        let q3Score = 0;
+        let q3Total = quiz3Questions.length;
+
+        // --- DOM Elements ---
+        const textDisplay = document.getElementById('text-display');
+        const nextButton = document.getElementById('next-button');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const stageContents = document.querySelectorAll('.stage-content');
+        
+        // --- Tab & Stage Management ---
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                showStage(button.getAttribute('data-stage'));
+            });
+        });
+
+        function showStage(stageId) {
+            stageContents.forEach(content => content.classList.remove('active'));
+            document.getElementById(`stage-${stageId}`).classList.add('active');
+            
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+                if (button.getAttribute('data-stage') === stageId) {
+                    button.classList.add('active');
+                }
+            });
+        }
+
+        // --- STAGE 0: INTRODUCTION LOGIC ---
+
+        function showNextSentence() {
+            if (currentSentenceIndex < sentences.length) {
+                const sentenceData = sentences[currentSentenceIndex];
+                
+                const newSentence = document.createElement('p');
+                newSentence.className = 'sentence-reveal';
+                newSentence.setAttribute('data-type', sentenceData.type.toUpperCase());
+                newSentence.innerHTML = sentenceData.text;
+                
+                textDisplay.appendChild(newSentence);
+                void newSentence.offsetWidth; 
+                newSentence.classList.add('show');
+                
+                currentSentenceIndex++;
+
+                if (currentSentenceIndex < sentences.length) {
+                    nextButton.innerHTML = `<i class="fas fa-angle-double-right"></i> Continue: Show Next Detail (${currentSentenceIndex + 1}/${sentences.length})`;
+                } else {
+                    nextButton.textContent = "Lesson Complete! Start Quiz 1!";
+                    nextButton.onclick = () => showStage('quiz1');
+                    nextButton.style.backgroundColor = 'var(--color-secondary)';
+                }
+            }
+        }
+        nextButton.addEventListener('click', showNextSentence);
+        
+        // --- STAGE 1: CLASSIFICATION QUIZ LOGIC ---
+        
+        function createQ1Quiz() {
+            const area = document.getElementById('q1-quiz-area');
+            quiz1Questions.forEach((q, index) => {
+                const qBox = document.createElement('div');
+                qBox.className = 'question-box';
+                qBox.innerHTML = `
+                    <p style="font-weight: 600;">${index + 1}. ${q.statement}</p>
+                    <div>
+                        <button class="option-button" data-qindex="${index}" data-choice="RAIN"><i class="fas fa-cloud"></i> RAIN</button>
+                        <button class="option-button" data-qindex="${index}" data-choice="TEMP"><i class="fas fa-thermometer-half"></i> TEMPERATURE</button>
+                    </div>
+                    <div id="q1-result-${index}" style="margin-top: 10px;"></div>
+                `;
+                area.appendChild(qBox);
+            });
+
+            document.querySelectorAll('#q1-quiz-area .option-button').forEach(button => {
+                button.addEventListener('click', handleQ1Answer);
+            });
+        }
+
+        function handleQ1Answer(event) {
+            const button = event.target;
+            const index = parseInt(button.getAttribute('data-qindex'));
+            const choice = button.getAttribute('data-choice');
+            const question = quiz1Questions[index];
+            const resultDiv = document.getElementById(`q1-result-${index}`);
+            
+            if (button.parentElement.classList.contains('answered')) return;
+
+            button.parentElement.classList.add('answered');
+            button.parentElement.querySelectorAll('.option-button').forEach(btn => btn.disabled = true);
+
+            if (choice === question.answer) {
+                button.classList.add('correct');
+                q1Score++;
+                resultDiv.innerHTML = `<span class="feedback success"><i class="fas fa-check"></i> Correct! This is about ${question.answer}.</span>`;
+            } else {
+                button.classList.add('incorrect');
+                resultDiv.innerHTML = `<span class="feedback error"><i class="fas fa-times"></i> Incorrect. Check sentence #${question.ref} for the answer!</span>`;
+            }
+            
+            // Check if all answered
+            if (document.querySelectorAll('#q1-quiz-area .answered').length === q1Total) {
+                document.getElementById('q1-feedback').className = 'feedback success';
+                document.getElementById('q1-feedback').innerHTML = `Quiz 1 Complete! You scored ${q1Score}/${q1Total}.`;
+                document.getElementById('q1-next-stage').style.display = 'block';
+            }
+        }
+        
+        // --- STAGE 2: GAP-FILL QUIZ LOGIC ---
+
+        function checkGapFillAnswers() {
+            const inputs = document.querySelectorAll('#stage-quiz2 .gap-input');
+            let correctCount = 0;
+            inputs.forEach(input => {
+                const userAnswer = input.value.toLowerCase().trim();
+                const correctAnswer = input.getAttribute('data-answer').toLowerCase();
+                input.disabled = true;
+
+                if (userAnswer === correctAnswer) {
+                    input.classList.add('correct');
+                    input.classList.remove('incorrect');
+                    correctCount++;
+                } else {
+                    input.classList.add('incorrect');
+                    input.classList.remove('correct');
+                    input.value = correctAnswer.toUpperCase(); // Show correct answer
+                }
+            });
+
+            const feedbackDiv = document.getElementById('q2-feedback');
+            if (correctCount === inputs.length) {
+                feedbackDiv.className = 'feedback success';
+                feedbackDiv.innerHTML = `<i class="fas fa-trophy"></i> **Fantastic!** All ${correctCount}/${inputs.length} answers are correct. Excellent vocabulary and grammar!`;
+                document.getElementById('q2-next-stage').style.display = 'block';
+            } else {
+                feedbackDiv.className = 'feedback error';
+                feedbackDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> You got ${correctCount}/${inputs.length} correct. Check the red boxes for the correct answers and try to remember them.`;
+            }
+        }
+
+        // --- STAGE 3: TRUE/FALSE QUIZ LOGIC ---
+
+        function createQ3Quiz() {
+            const area = document.getElementById('q3-quiz-area');
+            area.innerHTML = '';
+            quiz3Questions.forEach((q, index) => {
+                const qBox = document.createElement('div');
+                qBox.className = 'question-box';
+                qBox.innerHTML = `
+                    <p style="font-weight: 600;">${index + 1}. ${q.statement}</p>
+                    <div id="q3-options-${index}">
+                        <span class="tf-option" data-qindex="${index}" data-choice="true" data-value="True">TRUE</span>
+                        <span class="tf-option" data-qindex="${index}" data-choice="false" data-value="False">FALSE</span>
+                    </div>
+                    <div id="q3-result-${index}" style="margin-top: 10px;"></div>
+                `;
+                area.appendChild(qBox);
+            });
+
+            document.querySelectorAll('#q3-quiz-area .tf-option').forEach(option => {
+                option.addEventListener('click', handleQ3Answer);
+            });
+        }
+
+        function handleQ3Answer(event) {
+            const option = event.target;
+            const index = parseInt(option.getAttribute('data-qindex'));
+            const choice = option.getAttribute('data-choice') === 'true';
+            const question = quiz3Questions[index];
+            const resultDiv = document.getElementById(`q3-result-${index}`);
+            const optionsDiv = document.getElementById(`q3-options-${index}`);
+            
+            if (optionsDiv.classList.contains('answered')) return;
+            optionsDiv.classList.add('answered');
+            optionsDiv.querySelectorAll('.tf-option').forEach(opt => opt.style.pointerEvents = 'none');
+
+            if (choice === question.answer) {
+                q3Score++;
+                resultDiv.innerHTML = `<span class="feedback success"><i class="fas fa-check"></i> Correct!</span>`;
+            } else {
+                resultDiv.innerHTML = `<span class="feedback error"><i class="fas fa-times"></i> Incorrect. The correct answer is ${question.answer.toString().toUpperCase()}. (Sentence #${question.ref})</span>`;
+            }
+            
+            // Final scoring
+            if (document.querySelectorAll('#q3-quiz-area .answered').length === q3Total) {
+                document.getElementById('q3-feedback').className = 'feedback info';
+                document.getElementById('q3-feedback').innerHTML = `Quiz 3 Complete! Final Score: ${q3Score}/${q3Total}.`;
+                
+                const finalMessage = q3Score === q3Total ? 
+                    '🏆 **PERFECT SCORE!** You mastered the Tehran Weather Report!' : 
+                    `🎉 **Great Effort!** Your final quiz score is ${q3Score}/${q3Total}. Keep practicing!`;
+                
+                document.getElementById('final-score').innerHTML = finalMessage;
+            }
+        }
+
+        // --- Initialization ---
+        window.onload = () => {
+            createQ1Quiz();
+            createQ3Quiz();
+        };
+
+    </script>
+
+</body>
+</html>

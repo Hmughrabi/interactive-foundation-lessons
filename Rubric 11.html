@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 2 Final Speaking Rubric</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+            position: relative;
+        }
+        th {
+            background-color: #1a73e8;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        .score-row {
+            background-color: #e6e6e6;
+            font-weight: bold;
+            text-align: center;
+        }
+        .ar-translation {
+            display: block;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            color: #555;
+            font-style: italic;
+        }
+        .heading {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+        }
+        .excelling { background-color: #d4edda; }
+        .succeeding { background-color: #fff3cd; }
+        .passing { background-color: #f8d7da; }
+        .emerging { background-color: #f1f1f1; }
+        .unacceptable { background-color: #e2e3e5; }
+        .select-button {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        .select-button.selected {
+            background-color: #4CAF50;
+        }
+        #total-grade-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #eaf6ff;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #1a73e8;
+        }
+        #total-grade-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        .info-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .info-box {
+            flex: 1;
+            min-width: 250px;
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .info-box label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .info-box input {
+            width: calc(100% - 100px);
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .action-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .action-buttons button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #savePdfBtn {
+            background-color: #4CAF50;
+        }
+        #sendEmailBtn {
+            background-color: #1a73e8;
+        }
+
+        /* Hide buttons and inputs when printing */
+        @media print {
+            .action-buttons, .info-box input {
+                display: none;
+            }
+            .info-box {
+                border: none;
+                background-color: transparent;
+            }
+            .info-box label {
+                display: block;
+                font-weight: bold;
+                color: #000;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 style="text-align: center;">Level 2 Final Speaking Rubric</h1>
+
+    <div class="info-section">
+        <div class="info-box">
+            <label for="student-name">Student Name:</label>
+            <input type="text" id="student-name" name="student-name">
+        </div>
+        <div class="info-box">
+            <label for="section-number">Section No.:</label>
+            <input type="text" id="section-number" name="section-number">
+        </div>
+        <div class="info-box">
+            <label for="student-id">Student ID:</label>
+            <input type="text" id="student-id" name="student-id">
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th colspan="7" class="heading">IELTS-based descriptors</th>
+            </tr>
+            <tr>
+                <th colspan="2"></th>
+                <th data-weight="0.20">Fluency & Coherence (20%)</th>
+                <th data-weight="0.20">Lexical Resource (20%)</th>
+                <th data-weight="0.20">Grammatical Range & Accuracy (20%)</th>
+                <th data-weight="0.20">Pronunciation (20%)</th>
+                <th data-weight="0.10">Length (10%)</th>
+                <th data-weight="0.10">Questions (10%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="score-row">
+                <td colspan="2"></td>
+                <td data-score="4">4</td>
+                <td data-score="4">4</td>
+                <td data-score="4">4</td>
+                <td data-score="4">4</td>
+                <td data-score="2">2</td>
+                <td data-score="2">2</td>
+            </tr>
+            <tr class="excelling">
+                <td colspan="2">Excelling</td>
+                <td data-score="4">
+                    <button class="select-button" data-score="4" data-col="0"></button>
+                    Excellent flow of speech with no reading. Very little repetition, pausing, or self-correction. Minor errors in complex communication. Full coherence. Exceeds expectations for this level.
+                    <span class="ar-translation">تدفق ممتاز في الكلام بدون قراءة. تكرار أو توقف أو تصحيح ذاتي قليل جدًا. أخطاء طفيفة في التواصل المعقد. اتساق كامل. يتجاوز التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="4">
+                    <button class="select-button" data-score="4" data-col="1"></button>
+                    Accurate, appropriate range of taught vocabulary. Minor errors in complex or creative lexis; communication not affected. Exceeds expectations for this level.
+                    <span class="ar-translation">نطاق دقيق ومناسب من المفردات التي تم تدريسها. أخطاء طفيفة في المصطلحات المعقدة أو الإبداعية؛ لا يتأثر التواصل. يتجاوز التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="4">
+                    <button class="select-button" data-score="4" data-col="2"></button>
+                    Excellent range of taught structures. Minor errors; communication not affected. Exceeds expectations for this level.
+                    <span class="ar-translation">نطاق ممتاز من التراكيب التي تم تدريسها. أخطاء طفيفة؛ لا يتأثر التواصل. يتجاوز التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="4">
+                    <button class="select-button" data-score="4" data-col="3"></button>
+                    Excellent pronunciation. Effortless to understand. Minor impact from L1. Exceeds expectations for this level.
+                    <span class="ar-translation">نطق ممتاز. سهل الفهم. تأثير طفيف من اللغة الأم. يتجاوز التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="2">
+                    <button class="select-button" data-score="2" data-col="4"></button>
+                    3:00+
+                    <span class="ar-translation">3 دقائق أو أكثر</span>
+                </td>
+                <td data-score="2">
+                    <button class="select-button" data-score="2" data-col="5"></button>
+                    Excellent understanding of questions. Relevant responses to all questions. Minor errors; communication not affected.
+                    <span class="ar-translation">فهم ممتاز للأسئلة. إجابات ذات صلة بجميع الأسئلة. أخطاء طفيفة؛ لا يتأثر التواصل.</span>
+                </td>
+            </tr>
+            <tr class="score-row">
+                <td colspan="2"></td>
+                <td data-score="3">3</td>
+                <td data-score="3">3</td>
+                <td data-score="3">3</td>
+                <td data-score="3">3</td>
+                <td data-score="1.5">1.5</td>
+                <td data-score="1.5">1.5</td>
+            </tr>
+            <tr class="succeeding">
+                <td colspan="2">Succeeding</td>
+                <td data-score="3">
+                    <button class="select-button" data-score="3" data-col="0"></button>
+                    Good flow of speech with no reading. A little repetition, pausing, or self-correction. Minor incoherence. Meets all expectations for this level.
+                    <span class="ar-translation">تدفق جيد في الكلام بدون قراءة. تكرار أو توقف أو تصحيح ذاتي قليل. عدم اتساق طفيف. يفي بجميع التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="3">
+                    <button class="select-button" data-score="3" data-col="1"></button>
+                    Appropriate range of taught vocabulary. A few errors; communication not affected. Meets all expectations for this level.
+                    <span class="ar-translation">نطاق مناسب من المفردات التي تم تدريسها. أخطاء قليلة؛ لا يتأثر التواصل. يفي بجميع التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="3">
+                    <button class="select-button" data-score="3" data-col="2"></button>
+                    Good range of taught structures. A few errors; communication not affected. Meets all expectations for this level.
+                    <span class="ar-translation">نطاق جيد من التراكيب التي تم تدريسها. أخطاء قليلة؛ لا يتأثر التواصل. يفي بجميع التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="3">
+                    <button class="select-button" data-score="3" data-col="3"></button>
+                    Good pronunciation. Easy to understand. Some impact from L1; communication not affected. Meets all expectations for this level.
+                    <span class="ar-translation">نطق جيد. سهل الفهم. تأثير ما من اللغة الأم؛ لا يتأثر التواصل. يفي بجميع التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="1.5">
+                    <button class="select-button" data-score="1.5" data-col="4"></button>
+                    2:00+
+                    <span class="ar-translation">دقيقتان أو أكثر</span>
+                </td>
+                <td data-score="1.5">
+                    <button class="select-button" data-score="1.5" data-col="5"></button>
+                    Good understanding of questions. Relevant responses to all questions. A few errors; communication not affected.
+                    <span class="ar-translation">فهم جيد للأسئلة. إجابات ذات صلة بجميع الأسئلة. أخطاء قليلة؛ لا يتأثر التواصل.</span>
+                </td>
+            </tr>
+            <tr class="score-row">
+                <td colspan="2"></td>
+                <td data-score="2">2</td>
+                <td data-score="2">2</td>
+                <td data-score="2">2</td>
+                <td data-score="2">2</td>
+                <td data-score="1">1</td>
+                <td data-score="1">1</td>
+            </tr>
+            <tr class="passing">
+                <td colspan="2">Passing</td>
+                <td data-score="2">
+                    <button class="select-button" data-score="2" data-col="0"></button>
+                    Adequate flow of speech with minimal reading. Some repetition, pausing, or self-correction; communication affected in places. Some incoherence. Meets most expectations for this level.
+                    <span class="ar-translation">تدفق كافٍ في الكلام مع قراءة قليلة. بعض التكرار أو التوقف أو التصحيح الذاتي؛ يتأثر التواصل في بعض الأماكن. عدم اتساق ما. يفي بمعظم التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="2">
+                    <button class="select-button" data-score="2" data-col="1"></button>
+                    Adequate range of taught vocabulary. Some errors; communication affected in places. Meets most expectations for this level.
+                    <span class="ar-translation">نطاق كافٍ من المفردات التي تم تدريسها. بعض الأخطاء؛ يتأثر التواصل في بعض الأماكن. يفي بمعظم التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="2">
+                    <button class="select-button" data-score="2" data-col="2"></button>
+                    Adequate range of taught structures. Some errors; communication affected in places. Meets most expectations for this level.
+                    <span class="ar-translation">نطاق كافٍ من التراكيب التي تم تدريسها. بعض الأخطاء؛ يتأثر التواصل في بعض الأماكن. يفي بمعظم التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="2">
+                    <button class="select-button" data-score="2" data-col="3"></button>
+                    Adequate pronunciation. Mostly easy to understand. Some impact from L1; communication affected in places. Meets most expectations for this level.
+                    <span class="ar-translation">نطق كافٍ. سهل الفهم في الغالب. تأثير ما من اللغة الأم؛ يتأثر التواصل في بعض الأماكن. يفي بمعظم التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="1">
+                    <button class="select-button" data-score="1" data-col="4"></button>
+                    1:30+
+                    <span class="ar-translation">دقيقة ونصف أو أكثر</span>
+                </td>
+                <td data-score="1">
+                    <button class="select-button" data-score="1" data-col="5"></button>
+                    Adequate understanding of questions. Mostly relevant responses. Some errors; communication affected in places.
+                    <span class="ar-translation">فهم كافٍ للأسئلة. إجابات ذات صلة في الغالب. بعض الأخطاء؛ يتأثر التواصل في بعض الأماكن.</span>
+                </td>
+            </tr>
+            <tr class="score-row">
+                <td colspan="2"></td>
+                <td data-score="1.5">1.5</td>
+                <td data-score="1.5">1.5</td>
+                <td data-score="1.5">1.5</td>
+                <td data-score="1.5">1.5</td>
+                <td data-score="0.75">0.75</td>
+                <td data-score="0.75">0.75</td>
+            </tr>
+            <tr class="emerging">
+                <td colspan="2">Emerging</td>
+                <td data-score="1.5">
+                    <button class="select-button" data-score="1.5" data-col="0"></button>
+                    Limited flow of speech with reading. Repetition, pausing, or self-correction; communication affected frequently. Limited coherence. Meets some expectations for this level.
+                    <span class="ar-translation">تدفق محدود في الكلام مع قراءة. تكرار أو توقف أو تصحيح ذاتي؛ يتأثر التواصل بشكل متكرر. اتساق محدود. يفي ببعض التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="1.5">
+                    <button class="select-button" data-score="1.5" data-col="1"></button>
+                    Limited range of taught vocabulary. Many errors; communication affected frequently. Meets some expectations for this level.
+                    <span class="ar-translation">نطاق محدود من المفردات التي تم تدريسها. أخطاء كثيرة؛ يتأثر التواصل بشكل متكرر. يفي ببعض التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="1.5">
+                    <button class="select-button" data-score="1.5" data-col="2"></button>
+                    Limited range of taught structures. Many errors; communication affected frequently. Meets some expectations for this level.
+                    <span class="ar-translation">نطاق محدود من التراكيب التي تم تدريسها. أخطاء كثيرة؛ يتأثر التواصل بشكل متكرر. يفي ببعض التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="1.5">
+                    <button class="select-button" data-score="1.5" data-col="3"></button>
+                    Limited pronunciation. Difficult to understand in places. Frequent impact from L1; communication affected frequently. Meets some expectations for this level.
+                    <span class="ar-translation">نطق محدود. صعب الفهم في بعض الأماكن. تأثير متكرر من اللغة الأم؛ يتأثر التواصل بشكل متكرر. يفي ببعض التوقعات لهذا المستوى.</span>
+                </td>
+                <td data-score="0.75">
+                    <button class="select-button" data-score="0.75" data-col="4"></button>
+                    1:00+
+                    <span class="ar-translation">دقيقة أو أكثر</span>
+                </td>
+                <td data-score="0.75">
+                    <button class="select-button" data-score="0.75" data-col="5"></button>
+                    Limited understanding of questions. Some relevant responses. Many errors; communication affected frequently.
+                    <span class="ar-translation">فهم محدود للأسئلة. بعض الإجابات ذات الصلة. أخطاء كثيرة؛ يتأثر التواصل بشكل متكرر.</span>
+                </td>
+            </tr>
+            <tr class="score-row">
+                <td colspan="2"></td>
+                <td data-score="0.5">0.5</td>
+                <td data-score="0.5">0.5</td>
+                <td data-score="0.5">0.5</td>
+                <td data-score="0.5">0.5</td>
+                <td data-score="0.3">0.3</td>
+                <td data-score="0.3">0.3</td>
+            </tr>
+            <tr class="unacceptable">
+                <td colspan="2">Unacceptable</td>
+                <td data-score="0.5">
+                    <button class="select-button" data-score="0.5" data-col="0"></button>
+                    Little flow of speech or all reading. Little coherence. Meets very few expectations for this level.
+                    <span class="ar-translation">تدفق قليل في الكلام أو قراءة كاملة. اتساق قليل. يفي بتوقعات قليلة جدًا لهذا المستوى.</span>
+                </td>
+                <td data-score="0.5">
+                    <button class="select-button" data-score="0.5" data-col="1"></button>
+                    Little range of taught vocabulary. Rife with errors; little communication. Meets very few expectations for this level.
+                    <span class="ar-translation">نطاق قليل من المفردات التي تم تدريسها. مليء بالأخطاء؛ تواصل قليل. يفي بتوقعات قليلة جدًا لهذا المستوى.</span>
+                </td>
+                <td data-score="0.5">
+                    <button class="select-button" data-score="0.5" data-col="2"></button>
+                    Little range of taught structures. Rife with errors; little communication. Meets very few expectations for this level.
+                    <span class="ar-translation">نطاق قليل من التراكيب التي تم تدريسها. مليء بالأخطاء؛ تواصل قليل. يفي بتوقعات قليلة جدًا لهذا المستوى.</span>
+                </td>
+                <td data-score="0.5">
+                    <button class="select-button" data-score="0.5" data-col="3"></button>
+                    Poor pronunciation. Difficult to understand throughout. Pervasive impact from L1; little communication. Meets very few expectations for this level.
+                    <span class="ar-translation">نطق سيئ. يصعب فهمه طوال الوقت. تأثير متفشٍ من اللغة الأم؛ تواصل قليل. يفي بتوقعات قليلة جدًا لهذا المستوى.</span>
+                </td>
+                <td data-score="0.3">
+                    <button class="select-button" data-score="0.3" data-col="4"></button>
+                    0:30+
+                    <span class="ar-translation">30 ثانية أو أكثر</span>
+                </td>
+                <td data-score="0.3">
+                    <button class="select-button" data-score="0.3" data-col="5"></button>
+                    Little understanding of questions. Few relevant responses. Rife with errors; little communication.
+                    <span class="ar-translation">فهم قليل للأسئلة. إجابات قليلة ذات صلة. مليء بالأخطاء؛ تواصل قليل.</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="total-grade-section">
+        <h2>Total Grade:</h2>
+        <div id="total-grade-value">0</div>
+    </div>
+
+    <div class="action-buttons">
+        <button id="savePdfBtn">Save as PDF</button>
+        <button id="sendEmailBtn">Send Grade via Email</button>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const buttons = document.querySelectorAll('.select-button');
+        const totalGradeValue = document.getElementById('total-grade-value');
+        const savePdfBtn = document.getElementById('savePdfBtn');
+        const sendEmailBtn = document.getElementById('sendEmailBtn');
+        const studentNameInput = document.getElementById('student-name');
+        const studentIdInput = document.getElementById('student-id');
+        let selectedScores = {};
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const colIndex = parseInt(button.dataset.col, 10);
+                const score = parseFloat(button.dataset.score);
+                
+                // Get the currently selected button in this column, if any
+                const currentSelection = document.querySelector(`.select-button.selected[data-col="${colIndex}"]`);
+
+                // If a button in this column is already selected, unselect it.
+                if (currentSelection) {
+                    currentSelection.classList.remove('selected');
+                    currentSelection.innerHTML = '';
+                    delete selectedScores[colIndex];
+                }
+
+                // If the clicked button was not the one currently selected, select it.
+                if (currentSelection !== button) {
+                    button.classList.add('selected');
+                    button.innerHTML = '&#10003;'; // Checkmark
+                    selectedScores[colIndex] = score;
+                }
+                
+                calculateTotalGrade();
+            });
+        });
+
+        savePdfBtn.addEventListener('click', () => {
+            window.print();
+        });
+
+        sendEmailBtn.addEventListener('click', () => {
+            const studentName = studentNameInput.value.trim();
+            const studentId = studentIdInput.value.trim();
+            const totalGrade = totalGradeValue.textContent;
+
+            if (studentName === '' || studentId === '') {
+                alert('Please enter both the student\'s name and ID to send the email.');
+                return;
+            }
+
+            const firstLetter = studentName.charAt(0).toLowerCase();
+            const studentEmail = `${firstLetter}${studentId}@du.edu.om`;
+            const subject = 'Your Level 2 Speaking Rubric Grade';
+            const body = `Dear ${studentName},\n\nYour final speaking rubric grade is: ${totalGrade}.\n\nRegards,\nYour Instructor`;
+
+            const mailtoLink = `mailto:${studentEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        });
+
+        function calculateTotalGrade() {
+            let totalScore = 0;
+            for (const key in selectedScores) {
+                totalScore += selectedScores[key];
+            }
+            totalGradeValue.textContent = totalScore.toFixed(2);
+        }
+    });
+</script>
+
+</body>
+</html>

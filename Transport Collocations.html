@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport Collocations - Interactive ESL Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            border: 5px solid #1e88e5;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #1e88e5, #00bcd4, #4caf50, #ff9800, #e91e63);
+        }
+        
+        h1 {
+            color: #1e88e5;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            color: #00bcd4;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .language-dev {
+            background: linear-gradient(to right, #ff9800, #ff5722);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            display: inline-block;
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
+        }
+        
+        .vocab-highlight {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .vocab-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .vocab-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .transport-icon {
+            color: #1e88e5;
+            font-size: 1.3rem;
+        }
+        
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px 15px 0 0;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: -1px;
+        }
+        
+        .tab {
+            padding: 20px 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            border-bottom: 5px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .tab:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.98);
+        }
+        
+        .tab.active {
+            border-bottom: 5px solid;
+            background: rgba(255, 255, 255, 0.98);
+        }
+        
+        .content-area {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 40px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            min-height: 600px;
+            margin-bottom: 30px;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .exercise-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .exercise {
+            margin-bottom: 50px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Exercise 1: Matching Game */
+        .matching-game {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .left-column, .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .match-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: move;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+        
+        .match-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .match-item.dragging {
+            opacity: 0.6;
+            transform: scale(0.98);
+        }
+        
+        .match-item.matched {
+            border: 2px solid #4caf50;
+            background: #e8f5e9;
+        }
+        
+        .match-item.incorrect {
+            border: 2px solid #f44336;
+            background: #ffebee;
+        }
+        
+        .match-feedback {
+            text-align: center;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .correct-feedback {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #4caf50;
+        }
+        
+        .incorrect-feedback {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #f44336;
+        }
+        
+        /* Exercise 2: Fill in the blanks */
+        .sentence-completion {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .sentence-item {
+            padding: 25px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-left: 6px solid;
+        }
+        
+        .sentence-text {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .blank {
+            display: inline-block;
+            min-width: 200px;
+            height: 45px;
+            border-bottom: 3px dashed #999;
+            margin: 0 10px;
+            vertical-align: middle;
+            text-align: center;
+            font-weight: bold;
+            color: #1565c0;
+            position: relative;
+            padding-top: 10px;
+        }
+        
+        .blank.filled {
+            border-bottom: 3px solid #1565c0;
+        }
+        
+        .word-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .word-option {
+            padding: 12px 25px;
+            background: #e3f2fd;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #bbdefb;
+        }
+        
+        .word-option:hover {
+            background: #bbdefb;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2);
+        }
+        
+        .word-option.used {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Exercise 3: Personal Answers */
+        .personal-answers {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .personal-item {
+            padding: 25px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-left: 6px solid #ff9800;
+        }
+        
+        .personal-prompt {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #e65100;
+            font-weight: 600;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.2rem;
+            border: 3px solid #ffe0b2;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            resize: vertical;
+            min-height: 100px;
+            transition: all 0.3s ease;
+        }
+        
+        .answer-input:focus {
+            outline: none;
+            border-color: #ff9800;
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
+        }
+        
+        .submit-btn {
+            padding: 15px 30px;
+            background: linear-gradient(to right, #ff9800, #ff5722);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 87, 34, 0.4);
+        }
+        
+        .answer-display {
+            margin-top: 25px;
+            padding: 20px;
+            background: #fff3e0;
+            border-radius: 10px;
+            display: none;
+            animation: popIn 0.5s ease;
+        }
+        
+        @keyframes popIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            70% { transform: scale(1.02); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Games Section */
+        .games-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .game-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 5px solid transparent;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .game-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .game-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #1e88e5;
+        }
+        
+        .game-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+        
+        .play-btn {
+            background: linear-gradient(to right, #1e88e5, #00bcd4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(30, 136, 229, 0.3);
+        }
+        
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(30, 136, 229, 0.4);
+        }
+        
+        /* Game Modals */
+        .game-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .game-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            border-radius: 20px;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(30px);
+            transition: transform 0.3s ease;
+        }
+        
+        .game-modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: #f44336;
+        }
+        
+        /* Buttons */
+        .check-btn, .reset-btn, .show-btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .check-btn {
+            background: linear-gradient(to right, #4caf50, #2e7d32);
+            color: white;
+        }
+        
+        .reset-btn {
+            background: linear-gradient(to right, #f44336, #c62828);
+            color: white;
+        }
+        
+        .show-btn {
+            background: linear-gradient(to right, #2196f3, #0d47a1);
+            color: white;
+        }
+        
+        .check-btn:hover, .reset-btn:hover, .show-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .controls {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        /* Color themes */
+        #tab1 { color: #1e88e5; border-color: #1e88e5; }
+        #tab2 { color: #00bcd4; border-color: #00bcd4; }
+        #tab3 { color: #4caf50; border-color: #4caf50; }
+        #tab4 { color: #ff9800; border-color: #ff9800; }
+        
+        #ex1-title { color: #1e88e5; border-color: #1e88e5; }
+        #ex2-title { color: #00bcd4; border-color: #00bcd4; }
+        #ex3-title { color: #4caf50; border-color: #4caf50; }
+        
+        .ex1 { background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-left-color: #1e88e5; }
+        .ex2 { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); border-left-color: #00bcd4; }
+        .ex3 { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border-left-color: #4caf50; }
+        
+        .game1 { border-color: #1e88e5; }
+        .game2 { border-color: #00bcd4; }
+        .game3 { border-color: #4caf50; }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: white;
+            font-size: 1.2rem;
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .answer-popup {
+            position: absolute;
+            background: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 10;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .answer-popup.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .matching-game {
+                grid-template-columns: 1fr;
+            }
+            
+            .games-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .exercise-title {
+                font-size: 1.6rem;
+            }
+            
+            .modal-content {
+                padding: 20px;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="language-dev">O LANGUAGE DEVELOPMENT</div>
+            <h1><i class="fas fa-bus"></i> Transport Collocations</h1>
+            <p class="subtitle">Interactive ESL Learning Platform</p>
+            
+            <div class="vocab-highlight">
+                <div class="vocab-item"><i class="fas fa-car transport-icon"></i> Traffic</div>
+                <div class="vocab-item"><i class="fas fa-bus transport-icon"></i> Public Transport</div>
+                <div class="vocab-item"><i class="fas fa-bicycle transport-icon"></i> Cycle Lane</div>
+                <div class="vocab-item"><i class="fas fa-clock transport-icon"></i> Rush Hour</div>
+                <div class="vocab-item"><i class="fas fa-users transport-icon"></i> Car Share</div>
+                <div class="vocab-item"><i class="fas fa-gas-pump transport-icon"></i> Fuel Duty</div>
+                <div class="vocab-item"><i class="fas fa-parking transport-icon"></i> Parking Restrictions</div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="tabs">
+                <div class="tab active" id="tab1" data-tab="tab1-content">
+                    <i class="fas fa-puzzle-piece"></i> Exercise 1: Matching
+                </div>
+                <div class="tab" id="tab2" data-tab="tab2-content">
+                    <i class="fas fa-edit"></i> Exercise 2: Complete Sentences
+                </div>
+                <div class="tab" id="tab3" data-tab="tab3-content">
+                    <i class="fas fa-comments"></i> Exercise 3: Personal Answers
+                </div>
+                <div class="tab" id="tab4" data-tab="tab4-content">
+                    <i class="fas fa-gamepad"></i> Learning Games
+                </div>
+            </div>
+            
+            <div class="content-area">
+                <!-- Exercise 1: Matching -->
+                <div id="tab1-content" class="tab-content active">
+                    <h2 class="exercise-title" id="ex1-title">
+                        <i class="fas fa-link"></i> Exercise 1: Match the words to make transport collocations
+                    </h2>
+                    
+                    <div class="exercise ex1">
+                        <p style="font-size: 1.3rem; margin-bottom: 25px; color: #1565c0;">
+                            Drag the words from the right column to match with the words on the left to form correct transport collocations.
+                        </p>
+                        
+                        <div class="matching-game">
+                            <div class="left-column" id="left-column">
+                                <div class="match-item" data-word="traffic">1. traffic</div>
+                                <div class="match-item" data-word="public">2. public</div>
+                                <div class="match-item" data-word="cycle">3. cycle</div>
+                                <div class="match-item" data-word="rush">4. rush</div>
+                                <div class="match-item" data-word="car">5. car</div>
+                                <div class="match-item" data-word="fuel">6. fuel</div>
+                                <div class="match-item" data-word="parking">7. parking</div>
+                            </div>
+                            
+                            <div class="right-column" id="right-column">
+                                <div class="match-item draggable" data-match="transport" draggable="true">a. transport</div>
+                                <div class="match-item draggable" data-match="restrictions" draggable="true">b. restrictions</div>
+                                <div class="match-item draggable" data-match="congestion" draggable="true">c. congestion</div>
+                                <div class="match-item draggable" data-match="lane" draggable="true">d. lane</div>
+                                <div class="match-item draggable" data-match="share" draggable="true">e. share</div>
+                                <div class="match-item draggable" data-match="duty" draggable="true">f. duty</div>
+                                <div class="match-item draggable" data-match="hour" draggable="true">g. hour</div>
+                            </div>
+                        </div>
+                        
+                        <div class="match-feedback" id="match-feedback"></div>
+                        
+                        <div class="controls">
+                            <button class="check-btn" id="check-matches">
+                                <i class="fas fa-check-circle"></i> Check Answers
+                            </button>
+                            <button class="reset-btn" id="reset-matching">
+                                <i class="fas fa-redo"></i> Reset Game
+                            </button>
+                            <button class="show-btn" id="show-answers">
+                                <i class="fas fa-eye"></i> Show Answers
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="answer-key" style="margin-top: 40px; padding: 25px; background: #e8f5e9; border-radius: 15px; display: none;" id="answer-key">
+                        <h3 style="color: #2e7d32; margin-bottom: 15px;"><i class="fas fa-key"></i> Answer Key</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">
+                            <div style="background: white; padding: 15px; border-radius: 10px;">1. traffic <strong>congestion</strong></div>
+                            <div style="background: white; padding: 15px; border-radius: 10px;">2. public <strong>transport</strong></div>
+                            <div style="background: white; padding: 15px; border-radius: 10px;">3. cycle <strong>lane</strong></div>
+                            <div style="background: white; padding: 15px; border-radius: 10px;">4. rush <strong>hour</strong></div>
+                            <div style="background: white; padding: 15px; border-radius: 10px;">5. car <strong>share</strong></div>
+                            <div style="background: white; padding: 15px; border-radius: 10px;">6. fuel <strong>duty</strong></div>
+                            <div style="background: white; padding: 15px; border-radius: 10px;">7. parking <strong>restrictions</strong></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Exercise 2: Complete Sentences -->
+                <div id="tab2-content" class="tab-content">
+                    <h2 class="exercise-title" id="ex2-title">
+                        <i class="fas fa-tasks"></i> Exercise 2: Complete the sentences with transport collocations
+                    </h2>
+                    
+                    <div class="exercise ex2">
+                        <p style="font-size: 1.3rem; margin-bottom: 25px; color: #00838f;">
+                            Click on the words below to fill in the blanks in each sentence. Use each collocation only once.
+                        </p>
+                        
+                        <div class="sentence-completion">
+                            <div class="sentence-item">
+                                <div class="sentence-text">
+                                    1. <span class="blank" id="blank1" data-answer="rush hour"></span> is usually from eight to nine in the morning, and then again from four in the afternoon to seven in the evening.
+                                </div>
+                                <div class="word-options" id="options1">
+                                    <!-- Options will be inserted by JavaScript -->
+                                </div>
+                            </div>
+                            
+                            <div class="sentence-item">
+                                <div class="sentence-text">
+                                    2. At the weekend, because of <span class="blank" id="blank2" data-answer="parking restrictions"></span>, you can't leave your car there.
+                                </div>
+                                <div class="word-options" id="options2">
+                                    <!-- Options will be inserted by JavaScript -->
+                                </div>
+                            </div>
+                            
+                            <div class="sentence-item">
+                                <div class="sentence-text">
+                                    3. I am in a <span class="blank" id="blank3" data-answer="car share"></span> and drive to work with a colleague.
+                                </div>
+                                <div class="word-options" id="options3">
+                                    <!-- Options will be inserted by JavaScript -->
+                                </div>
+                            </div>
+                            
+                            <div class="sentence-item">
+                                <div class="sentence-text">
+                                    4. You can't drive in the <span class="blank" id="blank4" data-answer="cycle lane"></span>. It's only for bicycles.
+                                </div>
+                                <div class="word-options" id="options4">
+                                    <!-- Options will be inserted by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="controls">
+                            <button class="check-btn" id="check-sentences">
+                                <i class="fas fa-check-circle"></i> Check Answers
+                            </button>
+                            <button class="reset-btn" id="reset-sentences">
+                                <i class="fas fa-redo"></i> Reset Exercise
+                            </button>
+                        </div>
+                        
+                        <div id="sentence-feedback" style="margin-top: 30px;"></div>
+                    </div>
+                </div>
+                
+                <!-- Exercise 3: Personal Answers -->
+                <div id="tab3-content" class="tab-content">
+                    <h2 class="exercise-title" id="ex3-title">
+                        <i class="fas fa-user-edit"></i> Exercise 3: Complete sentences with your own words
+                    </h2>
+                    
+                    <div class="exercise ex3">
+                        <p style="font-size: 1.3rem; margin-bottom: 25px; color: #4a148c;">
+                            Complete these sentences with your own ideas. Then you can share your answers with a partner.
+                        </p>
+                        
+                        <div class="personal-answers">
+                            <div class="personal-item">
+                                <div class="personal-prompt">1. I don't like car shares because...</div>
+                                <textarea class="answer-input" id="answer1" placeholder="Type your answer here..."></textarea>
+                                <button class="submit-btn save-answer" data-answer="1">
+                                    <i class="fas fa-save"></i> Save Answer
+                                </button>
+                                <div class="answer-display" id="display1"></div>
+                            </div>
+                            
+                            <div class="personal-item">
+                                <div class="personal-prompt">2. Rush hour in my city is from ______ to ______ in the morning.</div>
+                                <textarea class="answer-input" id="answer2" placeholder="For example: 7:30 to 9:30"></textarea>
+                                <button class="submit-btn save-answer" data-answer="2">
+                                    <i class="fas fa-save"></i> Save Answer
+                                </button>
+                                <div class="answer-display" id="display2"></div>
+                            </div>
+                            
+                            <div class="personal-item">
+                                <div class="personal-prompt">3. Many people avoid public transport in my city because of...</div>
+                                <textarea class="answer-input" id="answer3" placeholder="Type your answer here..."></textarea>
+                                <button class="submit-btn save-answer" data-answer="3">
+                                    <i class="fas fa-save"></i> Save Answer
+                                </button>
+                                <div class="answer-display" id="display3"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="controls">
+                            <button class="check-btn" id="show-all-answers">
+                                <i class="fas fa-eye"></i> Show All My Answers
+                            </button>
+                            <button class="reset-btn" id="clear-answers">
+                                <i class="fas fa-trash"></i> Clear All Answers
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Games Section -->
+                <div id="tab4-content" class="tab-content">
+                    <h2 class="exercise-title" style="color: #ff9800; border-color: #ff9800;">
+                        <i class="fas fa-gamepad"></i> Transport Collocations Games
+                    </h2>
+                    
+                    <p style="font-size: 1.3rem; margin-bottom: 30px; color: #e65100;">
+                        Practice transport vocabulary with these interactive games. Click to play!
+                    </p>
+                    
+                    <div class="games-container">
+                        <div class="game-card game1">
+                            <i class="fas fa-car game-icon" style="color: #1e88e5;"></i>
+                            <h3 class="game-title">Transport Memory Match</h3>
+                            <p class="game-description">Match transport collocation cards with their definitions in this memory game. Find all pairs before time runs out!</p>
+                            <button class="play-btn" id="memory-game-btn">
+                                <i class="fas fa-play-circle"></i> Play Game
+                            </button>
+                        </div>
+                        
+                        <div class="game-card game2">
+                            <i class="fas fa-traffic-light game-icon" style="color: #00bcd4;"></i>
+                            <h3 class="game-title">Collocation Crossword</h3>
+                            <p class="game-description">Complete the crossword puzzle with transport collocations. Use the clues to fill in all the correct words.</p>
+                            <button class="play-btn" id="crossword-game-btn">
+                                <i class="fas fa-play-circle"></i> Play Game
+                            </button>
+                        </div>
+                        
+                        <div class="game-card game3">
+                            <i class="fas fa-bus game-icon" style="color: #4caf50;"></i>
+                            <h3 class="game-title">Sentence Scramble</h3>
+                            <p class="game-description">Unscramble the mixed-up sentences to form correct transport collocations. Drag and drop words into the right order.</p>
+                            <button class="play-btn" id="scramble-game-btn">
+                                <i class="fas fa-play-circle"></i> Play Game
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 50px; padding: 30px; background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-radius: 15px; text-align: center;">
+                        <h3 style="color: #e65100; margin-bottom: 15px;"><i class="fas fa-trophy"></i> Learning Progress</h3>
+                        <p style="font-size: 1.3rem; margin-bottom: 20px;">You've completed <strong id="completed-exercises">0</strong> out of 3 exercises</p>
+                        <div style="background: #ffccbc; border-radius: 10px; height: 25px; width: 100%; margin: 0 auto 15px;">
+                            <div id="progress-bar" style="background: linear-gradient(to right, #ff9800, #ff5722); width: 0%; height: 100%; border-radius: 10px; transition: width 0.5s ease;"></div>
+                        </div>
+                        <p style="font-weight: bold; color: #e65100;"><span id="progress-percent">0%</span> Mastery Achieved</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Game Modals -->
+        <div class="game-modal" id="memory-game-modal">
+            <div class="modal-content">
+                <div class="close-modal" id="close-memory">&times;</div>
+                <h2 style="color: #1e88e5; margin-bottom: 25px; text-align: center;">
+                    <i class="fas fa-car"></i> Transport Memory Match Game
+                </h2>
+                <div id="memory-game-board">
+                    <!-- Memory game will be inserted here -->
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="reset-btn" id="reset-memory">Restart Game</button>
+                    <div id="memory-score" style="margin-top: 20px; font-size: 1.3rem; font-weight: bold; color: #1e88e5;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-modal" id="crossword-game-modal">
+            <div class="modal-content">
+                <div class="close-modal" id="close-crossword">&times;</div>
+                <h2 style="color: #00bcd4; margin-bottom: 25px; text-align: center;">
+                    <i class="fas fa-traffic-light"></i> Collocation Crossword Game
+                </h2>
+                <div id="crossword-game">
+                    <!-- Crossword will be inserted here -->
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="check-btn" id="check-crossword">Check Answers</button>
+                    <button class="reset-btn" id="reset-crossword">Reset Game</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-modal" id="scramble-game-modal">
+            <div class="modal-content">
+                <div class="close-modal" id="close-scramble">&times;</div>
+                <h2 style="color: #4caf50; margin-bottom: 25px; text-align: center;">
+                    <i class="fas fa-bus"></i> Sentence Scramble Game
+                </h2>
+                <div id="scramble-game">
+                    <!-- Scramble game will be inserted here -->
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="check-btn" id="check-scramble">Check Sentence</button>
+                    <button class="reset-btn" id="next-scramble">Next Sentence</button>
+                    <div id="scramble-score" style="margin-top: 20px; font-size: 1.3rem; font-weight: bold; color: #4caf50;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Interactive ESL Transport Collocations &copy; 2023 | Revolutionizing Language Learning Through Interaction</p>
+            <p style="margin-top: 10px; font-size: 1rem;">Designed for engaging and effective English language teaching</p>
+        </footer>
+    </div>
+
+    <script>
+        // Tab switching functionality - WORKING
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up tab switching
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    document.getElementById(targetTab).classList.add('active');
+                    
+                    // Update progress when switching tabs
+                    updateProgress();
+                });
+            });
+            
+            // Initialize all exercises
+            initMatchingGame();
+            initSentenceCompletion();
+            initPersonalAnswers();
+            initGames();
+            
+            // Update progress on page load
+            updateProgress();
+        });
+        
+        // ========== EXERCISE 1: MATCHING GAME ==========
+        const correctMatches = {
+            'traffic': 'congestion',
+            'public': 'transport',
+            'cycle': 'lane',
+            'rush': 'hour',
+            'car': 'share',
+            'fuel': 'duty',
+            'parking': 'restrictions'
+        };
+        
+        let currentMatches = {};
+        
+        function initMatchingGame() {
+            // Reset matches
+            currentMatches = {};
+            
+            // Reset visual state
+            const leftItems = document.querySelectorAll('#left-column .match-item');
+            const rightItems = document.querySelectorAll('#right-column .match-item');
+            
+            leftItems.forEach(item => {
+                item.classList.remove('matched', 'incorrect');
+                item.style.background = 'white';
+                item.innerHTML = item.getAttribute('data-word');
+                // Remove any drop indicators
+                item.style.border = '2px solid transparent';
+            });
+            
+            rightItems.forEach(item => {
+                item.classList.remove('matched', 'incorrect', 'dragging');
+                item.style.background = 'white';
+                item.style.opacity = '1';
+                item.style.cursor = 'move';
+                item.setAttribute('draggable', 'true');
+                // Reset content
+                const matchValue = item.getAttribute('data-match');
+                item.innerHTML = matchValue;
+            });
+            
+            // Hide feedback and answer key
+            document.getElementById('match-feedback').style.display = 'none';
+            document.getElementById('answer-key').style.display = 'none';
+            
+            // Set up drag and drop
+            setupDragAndDrop();
+            
+            // Set up buttons
+            document.getElementById('check-matches').addEventListener('click', checkMatchingGame);
+            document.getElementById('reset-matching').addEventListener('click', initMatchingGame);
+            document.getElementById('show-answers').addEventListener('click', showMatchingAnswers);
+        }
+        
+        function setupDragAndDrop() {
+            const draggableItems = document.querySelectorAll('#right-column .draggable');
+            const dropZones = document.querySelectorAll('#left-column .match-item');
+            
+            // Remove old event listeners
+            draggableItems.forEach(item => {
+                item.replaceWith(item.cloneNode(true));
+            });
+            
+            // Get fresh references
+            const freshDraggableItems = document.querySelectorAll('#right-column .draggable');
+            const freshDropZones = document.querySelectorAll('#left-column .match-item');
+            
+            // Set up drag events
+            freshDraggableItems.forEach(item => {
+                item.addEventListener('dragstart', function(e) {
+                    this.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', this.getAttribute('data-match'));
+                });
+                
+                item.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                });
+            });
+            
+            // Set up drop zones
+            freshDropZones.forEach(zone => {
+                zone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.style.background = '#f1f8e9';
+                });
+                
+                zone.addEventListener('dragleave', function() {
+                    this.style.background = 'white';
+                });
+                
+                zone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.style.background = 'white';
+                    
+                    const draggedData = e.dataTransfer.getData('text/plain');
+                    const draggedItem = document.querySelector(`[data-match="${draggedData}"]`);
+                    const leftWord = this.getAttribute('data-word');
+                    
+                    // If this left item already has a match, remove it
+                    if (currentMatches[leftWord]) {
+                        const previousMatch = document.querySelector(`[data-match="${currentMatches[leftWord]}"]`);
+                        if (previousMatch) {
+                            previousMatch.classList.remove('matched', 'incorrect');
+                            previousMatch.style.background = 'white';
+                            previousMatch.style.opacity = '1';
+                            previousMatch.style.cursor = 'move';
+                            previousMatch.setAttribute('draggable', 'true');
+                        }
+                    }
+                    
+                    // Mark the dragged item as matched
+                    draggedItem.classList.add('matched');
+                    draggedItem.style.background = '#e8f5e9';
+                    draggedItem.style.opacity = '0.7';
+                    draggedItem.style.cursor = 'default';
+                    draggedItem.setAttribute('draggable', 'false');
+                    
+                    // Store the match
+                    currentMatches[leftWord] = draggedData;
+                    
+                    // Update the left item to show the match
+                    this.classList.add('matched');
+                    this.style.border = '2px solid #4caf50';
+                    this.innerHTML = `${leftWord} <strong>${draggedData}</strong>`;
+                    
+                    // Create a popup effect
+                    createPopup(draggedData, this);
+                    
+                    // Update progress
+                    updateProgress();
+                });
+            });
+        }
+        
+        function createPopup(text, targetElement) {
+            const popup = document.createElement('div');
+            popup.className = 'answer-popup';
+            popup.textContent = text;
+            popup.style.position = 'fixed';
+            popup.style.zIndex = '1000';
+            
+            // Position near the target
+            const rect = targetElement.getBoundingClientRect();
+            popup.style.left = rect.left + 'px';
+            popup.style.top = (rect.top - 50) + 'px';
+            
+            document.body.appendChild(popup);
+            
+            // Animate the popup
+            setTimeout(() => {
+                popup.classList.add('show');
+                
+                // Move to target
+                setTimeout(() => {
+                    popup.style.top = (rect.top + 10) + 'px';
+                    popup.style.background = '#2196f3';
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        popup.remove();
+                    }, 800);
+                }, 300);
+            }, 10);
+        }
+        
+        function checkMatchingGame() {
+            let correctCount = 0;
+            const totalPairs = Object.keys(correctMatches).length;
+            const feedback = document.getElementById('match-feedback');
+            
+            // Reset all visual feedback first
+            document.querySelectorAll('#right-column .match-item').forEach(item => {
+                item.classList.remove('incorrect');
+            });
+            
+            // Check each match
+            for (const [leftWord, rightWord] of Object.entries(currentMatches)) {
+                const rightItem = document.querySelector(`[data-match="${rightWord}"]`);
+                
+                if (correctMatches[leftWord] === rightWord) {
+                    correctCount++;
+                    rightItem.classList.remove('incorrect');
+                    rightItem.classList.add('matched');
+                    rightItem.style.background = '#c8e6c9';
+                } else {
+                    rightItem.classList.remove('matched');
+                    rightItem.classList.add('incorrect');
+                    rightItem.style.background = '#ffcdd2';
+                }
+            }
+            
+            // Show feedback
+            feedback.style.display = 'block';
+            if (correctCount === totalPairs) {
+                feedback.textContent = `Excellent! All ${totalPairs} matches are correct!`;
+                feedback.className = 'match-feedback correct-feedback';
+            } else {
+                feedback.textContent = `You have ${correctCount} correct matches out of ${totalPairs}. Try again!`;
+                feedback.className = 'match-feedback incorrect-feedback';
+            }
+            
+            updateProgress();
+        }
+        
+        function showMatchingAnswers() {
+            const answerKey = document.getElementById('answer-key');
+            answerKey.style.display = 'block';
+            
+            // Animate the answer key
+            answerKey.style.opacity = '0';
+            answerKey.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                answerKey.style.transition = 'all 0.5s ease';
+                answerKey.style.opacity = '1';
+                answerKey.style.transform = 'translateY(0)';
+            }, 10);
+        }
+        
+        // ========== EXERCISE 2: SENTENCE COMPLETION ==========
+        const sentenceAnswers = {
+            'blank1': 'rush hour',
+            'blank2': 'parking restrictions',
+            'blank3': 'car share',
+            'blank4': 'cycle lane'
+        };
+        
+        const allOptions = [
+            'rush hour',
+            'parking restrictions', 
+            'car share',
+            'cycle lane',
+            'traffic congestion',
+            'public transport',
+            'fuel duty'
+        ];
+        
+        function initSentenceCompletion() {
+            // Clear all blanks
+            document.querySelectorAll('.blank').forEach(blank => {
+                blank.classList.remove('filled');
+                blank.textContent = '';
+                blank.dataset.answer = '';
+            });
+            
+            // Clear feedback
+            document.getElementById('sentence-feedback').innerHTML = '';
+            
+            // Initialize options for each sentence
+            for (let i = 1; i <= 4; i++) {
+                initSentenceOptions(i);
+            }
+            
+            // Set up buttons
+            document.getElementById('check-sentences').addEventListener('click', checkSentenceCompletion);
+            document.getElementById('reset-sentences').addEventListener('click', initSentenceCompletion);
+        }
+        
+        function initSentenceOptions(sentenceNum) {
+            const container = document.getElementById(`options${sentenceNum}`);
+            const correctAnswer = sentenceAnswers[`blank${sentenceNum}`];
+            
+            // Create 4 options for this sentence (1 correct + 3 random)
+            let options = [correctAnswer];
+            let otherOptions = allOptions.filter(opt => opt !== correctAnswer);
+            
+            // Shuffle and pick 3 random options
+            otherOptions.sort(() => Math.random() - 0.5);
+            options.push(...otherOptions.slice(0, 3));
+            
+            // Shuffle the options
+            options.sort(() => Math.random() - 0.5);
+            
+            // Clear container
+            container.innerHTML = '';
+            
+            // Create option buttons
+            options.forEach(option => {
+                const button = document.createElement('div');
+                button.className = 'word-option';
+                button.textContent = option;
+                button.addEventListener('click', function() {
+                    selectOption(option, `blank${sentenceNum}`);
+                });
+                container.appendChild(button);
+            });
+        }
+        
+        function selectOption(option, blankId) {
+            const blank = document.getElementById(blankId);
+            blank.textContent = option;
+            blank.classList.add('filled');
+            blank.dataset.answer = option;
+            
+            // Mark the option as used
+            const optionButtons = document.querySelectorAll(`#${blankId.replace('blank', 'options')} .word-option`);
+            optionButtons.forEach(button => {
+                if (button.textContent === option) {
+                    button.classList.add('used');
+                    button.style.opacity = '0.5';
+                    button.style.cursor = 'default';
+                    // Remove click event
+                    button.replaceWith(button.cloneNode(true));
+                }
+            });
+            
+            // Create popup effect
+            createPopup(option, blank);
+            
+            updateProgress();
+        }
+        
+        function checkSentenceCompletion() {
+            let correctCount = 0;
+            const totalBlanks = 4;
+            const feedback = document.getElementById('sentence-feedback');
+            
+            // Clear previous feedback
+            feedback.innerHTML = '';
+            
+            // Check each blank
+            for (let i = 1; i <= totalBlanks; i++) {
+                const blank = document.getElementById(`blank${i}`);
+                const userAnswer = blank.dataset.answer || '';
+                const correctAnswer = sentenceAnswers[`blank${i}`];
+                
+                if (userAnswer === correctAnswer) {
+                    correctCount++;
+                    blank.style.color = '#2e7d32';
+                    blank.style.borderBottomColor = '#4caf50';
+                } else {
+                    blank.style.color = '#c62828';
+                    blank.style.borderBottomColor = '#f44336';
+                    
+                    // Show correction
+                    const correction = document.createElement('div');
+                    correction.style.marginTop = '10px';
+                    correction.style.padding = '10px';
+                    correction.style.background = '#ffebee';
+                    correction.style.borderRadius = '5px';
+                    correction.style.color = '#c62828';
+                    correction.innerHTML = `Sentence ${i}: The correct answer is <strong>${correctAnswer}</strong>`;
+                    feedback.appendChild(correction);
+                }
+            }
+            
+            // Show overall result
+            const resultDiv = document.createElement('div');
+            resultDiv.style.marginBottom = '20px';
+            resultDiv.style.padding = '20px';
+            resultDiv.style.borderRadius = '10px';
+            resultDiv.style.fontSize = '1.3rem';
+            resultDiv.style.fontWeight = 'bold';
+            
+            if (correctCount === totalBlanks) {
+                resultDiv.textContent = `Perfect! All ${totalBlanks} sentences are correct!`;
+                resultDiv.style.background = '#e8f5e9';
+                resultDiv.style.color = '#2e7d32';
+            } else {
+                resultDiv.textContent = `You got ${correctCount} out of ${totalBlanks} correct.`;
+                resultDiv.style.background = '#fff3e0';
+                resultDiv.style.color = '#e65100';
+            }
+            
+            feedback.prepend(resultDiv);
+            
+            updateProgress();
+        }
+        
+        // ========== EXERCISE 3: PERSONAL ANSWERS ==========
+        function initPersonalAnswers() {
+            // Load saved answers
+            for (let i = 1; i <= 3; i++) {
+                const saved = localStorage.getItem(`transport_answer_${i}`);
+                if (saved) {
+                    document.getElementById(`answer${i}`).value = saved;
+                    showSavedAnswer(i, saved);
+                }
+            }
+            
+            // Set up save buttons
+            document.querySelectorAll('.save-answer').forEach(button => {
+                button.addEventListener('click', function() {
+                    const answerNum = this.getAttribute('data-answer');
+                    const answerText = document.getElementById(`answer${answerNum}`).value.trim();
+                    
+                    if (answerText) {
+                        // Save to localStorage
+                        localStorage.setItem(`transport_answer_${answerNum}`, answerText);
+                        
+                        // Show the answer
+                        showSavedAnswer(answerNum, answerText);
+                        
+                        // Show confirmation
+                        const originalHTML = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i> Saved!';
+                        this.style.background = 'linear-gradient(to right, #4caf50, #2e7d32)';
+                        
+                        setTimeout(() => {
+                            this.innerHTML = originalHTML;
+                            this.style.background = 'linear-gradient(to right, #ff9800, #ff5722)';
+                        }, 2000);
+                    }
+                });
+            });
+            
+            // Set up show all answers button
+            document.getElementById('show-all-answers').addEventListener('click', function() {
+                let hasAnswers = false;
+                for (let i = 1; i <= 3; i++) {
+                    const saved = localStorage.getItem(`transport_answer_${i}`);
+                    if (saved) {
+                        showSavedAnswer(i, saved);
+                        hasAnswers = true;
+                    }
+                }
+                
+                if (!hasAnswers) {
+                    alert('You haven\'t saved any answers yet. Please write and save your answers first.');
+                }
+            });
+            
+            // Set up clear all answers button
+            document.getElementById('clear-answers').addEventListener('click', function() {
+                if (confirm('Are you sure you want to clear all your answers?')) {
+                    for (let i = 1; i <= 3; i++) {
+                        document.getElementById(`answer${i}`).value = '';
+                        document.getElementById(`display${i}`).style.display = 'none';
+                        localStorage.removeItem(`transport_answer_${i}`);
+                    }
+                    
+                    // Show confirmation
+                    this.innerHTML = '<i class="fas fa-check"></i> Cleared!';
+                    this.style.background = 'linear-gradient(to right, #4caf50, #2e7d32)';
+                    
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-trash"></i> Clear All Answers';
+                        this.style.background = 'linear-gradient(to right, #f44336, #c62828)';
+                    }, 2000);
+                    
+                    updateProgress();
+                }
+            });
+        }
+        
+        function showSavedAnswer(answerNum, answerText) {
+            const display = document.getElementById(`display${answerNum}`);
+            display.innerHTML = `<strong>Your answer:</strong> ${answerText}`;
+            display.style.display = 'block';
+            
+            updateProgress();
+        }
+        
+        // ========== GAMES SECTION ==========
+        function initGames() {
+            // Memory Game
+            document.getElementById('memory-game-btn').addEventListener('click', function() {
+                document.getElementById('memory-game-modal').classList.add('active');
+                initMemoryGame();
+            });
+            
+            document.getElementById('close-memory').addEventListener('click', function() {
+                document.getElementById('memory-game-modal').classList.remove('active');
+            });
+            
+            document.getElementById('reset-memory').addEventListener('click', initMemoryGame);
+            
+            // Crossword Game
+            document.getElementById('crossword-game-btn').addEventListener('click', function() {
+                document.getElementById('crossword-game-modal').classList.add('active');
+                initCrosswordGame();
+            });
+            
+            document.getElementById('close-crossword').addEventListener('click', function() {
+                document.getElementById('crossword-game-modal').classList.remove('active');
+            });
+            
+            document.getElementById('check-crossword').addEventListener('click', checkCrossword);
+            document.getElementById('reset-crossword').addEventListener('click', initCrosswordGame);
+            
+            // Scramble Game
+            document.getElementById('scramble-game-btn').addEventListener('click', function() {
+                document.getElementById('scramble-game-modal').classList.add('active');
+                initScrambleGame();
+            });
+            
+            document.getElementById('close-scramble').addEventListener('click', function() {
+                document.getElementById('scramble-game-modal').classList.remove('active');
+            });
+            
+            document.getElementById('check-scramble').addEventListener('click', checkScramble);
+            document.getElementById('next-scramble').addEventListener('click', initScrambleGame);
+            
+            // Close modals when clicking outside
+            document.querySelectorAll('.game-modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                    }
+                });
+            });
+        }
+        
+        // Memory Game
+        let memoryCards = [];
+        let flippedCards = [];
+        let memoryMatches = 0;
+        
+        function initMemoryGame() {
+            const board = document.getElementById('memory-game-board');
+            board.innerHTML = '';
+            
+            memoryCards = [];
+            flippedCards = [];
+            memoryMatches = 0;
+            
+            // Create card pairs
+            const pairs = [
+                { word: 'traffic', match: 'congestion' },
+                { word: 'public', match: 'transport' },
+                { word: 'cycle', match: 'lane' },
+                { word: 'rush', match: 'hour' },
+                { word: 'car', match: 'share' },
+                { word: 'fuel', match: 'duty' },
+                { word: 'parking', match: 'restrictions' }
+            ];
+            
+            // Create cards
+            pairs.forEach(pair => {
+                memoryCards.push({ type: 'word', content: pair.word, match: pair.match });
+                memoryCards.push({ type: 'match', content: pair.match, match: pair.word });
+            });
+            
+            // Shuffle cards
+            memoryCards.sort(() => Math.random() - 0.5);
+            
+            // Create card elements
+            memoryCards.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'match-item';
+                cardElement.style.width = '120px';
+                cardElement.style.height = '120px';
+                cardElement.style.display = 'inline-block';
+                cardElement.style.margin = '10px';
+                cardElement.style.cursor = 'pointer';
+                cardElement.style.textAlign = 'center';
+                cardElement.style.lineHeight = '120px';
+                cardElement.style.fontSize = '1.2rem';
+                cardElement.style.background = '#1e88e5';
+                cardElement.style.color = 'white';
+                cardElement.style.borderRadius = '10px';
+                cardElement.dataset.index = index;
+                cardElement.dataset.type = card.type;
+                cardElement.dataset.content = card.content;
+                cardElement.dataset.match = card.match;
+                cardElement.textContent = '?';
+                
+                cardElement.addEventListener('click', flipMemoryCard);
+                board.appendChild(cardElement);
+            });
+            
+            document.getElementById('memory-score').textContent = 'Find matching pairs! Click cards to flip them.';
+        }
+        
+        function flipMemoryCard() {
+            // Don't flip if already flipped or matched
+            if (this.classList.contains('flipped') || this.classList.contains('matched')) return;
+            
+            // Don't flip if 2 cards are already flipped
+            if (flippedCards.length >= 2) return;
+            
+            // Flip the card
+            this.classList.add('flipped');
+            this.textContent = this.dataset.content;
+            this.style.background = this.dataset.type === 'word' ? '#bbdefb' : '#e3f2fd';
+            this.style.color = '#1565c0';
+            
+            flippedCards.push(this);
+            
+            // Check for match if 2 cards are flipped
+            if (flippedCards.length === 2) {
+                const card1 = flippedCards[0];
+                const card2 = flippedCards[1];
+                
+                // Check if they match
+                if ((card1.dataset.type === 'word' && card2.dataset.type === 'match' && 
+                     card1.dataset.content === card2.dataset.match) ||
+                    (card2.dataset.type === 'word' && card1.dataset.type === 'match' && 
+                     card2.dataset.content === card1.dataset.match)) {
+                    
+                    // Match found
+                    setTimeout(() => {
+                        card1.classList.add('matched');
+                        card2.classList.add('matched');
+                        card1.style.background = '#4caf50';
+                        card2.style.background = '#4caf50';
+                        card1.style.color = 'white';
+                        card2.style.color = 'white';
+                        memoryMatches++;
+                        
+                        document.getElementById('memory-score').textContent = 
+                            `Matches: ${memoryMatches} / 7`;
+                        
+                        if (memoryMatches === 7) {
+                            setTimeout(() => {
+                                document.getElementById('memory-score').innerHTML = 
+                                    '<span style="color:#4caf50;">🎉 Perfect! All pairs matched!</span>';
+                            }, 500);
+                        }
+                        
+                        flippedCards = [];
+                    }, 500);
+                } else {
+                    // No match, flip back
+                    setTimeout(() => {
+                        card1.classList.remove('flipped');
+                        card2.classList.remove('flipped');
+                        card1.textContent = '?';
+                        card2.textContent = '?';
+                        card1.style.background = '#1e88e5';
+                        card2.style.background = '#1e88e5';
+                        card1.style.color = 'white';
+                        card2.style.color = 'white';
+                        flippedCards = [];
+                    }, 1000);
+                }
+            }
+        }
+        
+        // Crossword Game
+        function initCrosswordGame() {
+            const crosswordContainer = document.getElementById('crossword-game');
+            crosswordContainer.innerHTML = `
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <h3 style="color: #00838f; margin-bottom: 20px;">Complete the crossword with transport collocations</h3>
+                    
+                    <div style="display: grid; grid-template-columns: auto 1fr; gap: 30px; margin-bottom: 30px;">
+                        <div>
+                            <h4 style="color: #00bcd4; margin-bottom: 15px;">Across</h4>
+                            <ol style="list-style-type: decimal; padding-left: 20px;">
+                                <li style="margin-bottom: 10px;">When there are too many cars on the road (2 words)</li>
+                                <li style="margin-bottom: 10px;">Buses, trains, and trams (2 words)</li>
+                                <li style="margin-bottom: 10px;">Special path for bicycles (2 words)</li>
+                                <li>Tax on petrol (2 words)</li>
+                            </ol>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: #00bcd4; margin-bottom: 15px;">Down</h4>
+                            <ol style="list-style-type: decimal; padding-left: 20px;">
+                                <li style="margin-bottom: 10px;">Busiest time for travel (2 words)</li>
+                                <li style="margin-bottom: 10px;">Sharing a car with others (2 words)</li>
+                                <li>Rules about where you can park (2 words)</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #f5f5f5; padding: 25px; border-radius: 10px;">
+                        <h4 style="color: #00bcd4; margin-bottom: 15px;">Write your answers here:</h4>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                            <div>
+                                <p><strong>Across</strong></p>
+                                <input type="text" id="across1" placeholder="1. ________" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #bbdefb; border-radius: 5px;">
+                                <input type="text" id="across2" placeholder="2. ________" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #bbdefb; border-radius: 5px;">
+                                <input type="text" id="across3" placeholder="3. ________" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #bbdefb; border-radius: 5px;">
+                                <input type="text" id="across4" placeholder="4. ________" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #bbdefb; border-radius: 5px;">
+                            </div>
+                            
+                            <div>
+                                <p><strong>Down</strong></p>
+                                <input type="text" id="down1" placeholder="1. ________" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #bbdefb; border-radius: 5px;">
+                                <input type="text" id="down2" placeholder="2. ________" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #bbdefb; border-radius: 5px;">
+                                <input type="text" id="down3" placeholder="3. ________" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #bbdefb; border-radius: 5px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function checkCrossword() {
+            const answers = {
+                'across1': 'traffic congestion',
+                'across2': 'public transport',
+                'across3': 'cycle lane',
+                'across4': 'fuel duty',
+                'down1': 'rush hour',
+                'down2': 'car share',
+                'down3': 'parking restrictions'
+            };
+            
+            let correctCount = 0;
+            
+            for (const [id, correctAnswer] of Object.entries(answers)) {
+                const input = document.getElementById(id);
+                const userAnswer = input.value.trim().toLowerCase();
+                
+                if (userAnswer === correctAnswer.toLowerCase()) {
+                    input.style.borderColor = '#4caf50';
+                    input.style.background = '#e8f5e9';
+                    correctCount++;
+                } else {
+                    input.style.borderColor = '#f44336';
+                    input.style.background = '#ffebee';
+                }
+            }
+            
+            // Show result
+            const feedback = document.createElement('div');
+            feedback.style.marginTop = '20px';
+            feedback.style.padding = '20px';
+            feedback.style.borderRadius = '10px';
+            feedback.style.fontSize = '1.2rem';
+            feedback.style.fontWeight = 'bold';
+            
+            if (correctCount === 7) {
+                feedback.innerHTML = '<span style="color: #2e7d32;">🎉 Excellent! All crossword answers are correct!</span>';
+                feedback.style.background = '#e8f5e9';
+            } else {
+                feedback.innerHTML = `<span style="color: #e65100;">You got ${correctCount} out of 7 correct.</span>`;
+                feedback.style.background = '#fff3e0';
+            }
+            
+            // Remove old feedback if exists
+            const oldFeedback = document.querySelector('#crossword-game .feedback');
+            if (oldFeedback) oldFeedback.remove();
+            
+            feedback.className = 'feedback';
+            document.querySelector('#crossword-game > div').appendChild(feedback);
+        }
+        
+        // Scramble Game
+        let currentScrambleIndex = 0;
+        const scrambleSentences = [
+            { scrambled: "congestion traffic avoid I", correct: "I avoid traffic congestion" },
+            { scrambled: "hour rush during bus take the I", correct: "I take the bus during rush hour" },
+            { scrambled: "lane cycle the use to prefer I", correct: "I prefer to use the cycle lane" },
+            { scrambled: "share car a in am I", correct: "I am in a car share" }
+        ];
+        
+        function initScrambleGame() {
+            currentScrambleIndex = (currentScrambleIndex + 1) % scrambleSentences.length;
+            const sentence = scrambleSentences[currentScrambleIndex];
+            
+            const scrambleContainer = document.getElementById('scramble-game');
+            scrambleContainer.innerHTML = `
+                <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+                    <h4 style="color: #388e3c; margin-bottom: 20px;">Unscramble these words to make a correct sentence:</h4>
+                    
+                    <div style="background: #f1f8e9; padding: 25px; border-radius: 10px; margin-bottom: 25px;">
+                        <div id="scrambled-words" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 30px;">
+                            ${sentence.scrambled.split(' ').map(word => `
+                                <div class="word-option" style="cursor: move;" draggable="true">${word}</div>
+                            `).join('')}
+                        </div>
+                        
+                        <div style="font-size: 1.2rem; color: #388e3c; margin-bottom: 15px;">Drag words to the boxes below:</div>
+                        
+                        <div id="sentence-builder" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; min-height: 60px; background: white; padding: 20px; border-radius: 10px; border: 2px dashed #c8e6c9;">
+                            ${sentence.scrambled.split(' ').map(() => `
+                                <div class="sentence-slot" style="width: 100px; height: 50px; border: 2px dashed #a5d6a7; border-radius: 5px;"></div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Set up drag and drop
+            const words = document.querySelectorAll('#scrambled-words .word-option');
+            const slots = document.querySelectorAll('.sentence-slot');
+            
+            words.forEach(word => {
+                word.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', this.textContent);
+                });
+            });
+            
+            slots.forEach(slot => {
+                slot.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                });
+                
+                slot.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    const word = e.dataTransfer.getData('text/plain');
+                    this.textContent = word;
+                    this.style.border = '2px solid #4caf50';
+                    this.style.background = '#e8f5e9';
+                    this.style.display = 'flex';
+                    this.style.alignItems = 'center';
+                    this.style.justifyContent = 'center';
+                    this.style.fontWeight = 'bold';
+                });
+            });
+            
+            document.getElementById('scramble-score').textContent = 'Drag words to form a sentence';
+        }
+        
+        function checkScramble() {
+            const slots = document.querySelectorAll('.sentence-slot');
+            const userSentence = Array.from(slots)
+                .map(slot => slot.textContent.trim())
+                .filter(word => word)
+                .join(' ');
+            
+            const correctSentence = scrambleSentences[currentScrambleIndex].correct;
+            const scoreDisplay = document.getElementById('scramble-score');
+            
+            if (userSentence.toLowerCase() === correctSentence.toLowerCase()) {
+                scoreDisplay.innerHTML = '<span style="color: #4caf50;">✅ Correct! Well done!</span>';
+            } else {
+                scoreDisplay.innerHTML = `<span style="color: #f44336;">Not quite. The correct sentence is: <strong>${correctSentence}</strong></span>`;
+            }
+        }
+        
+        // ========== PROGRESS TRACKING ==========
+        function updateProgress() {
+            let completed = 0;
+            
+            // Check Exercise 1 completion (matching)
+            if (Object.keys(currentMatches).length === 7) completed++;
+            
+            // Check Exercise 2 completion (sentences)
+            const filledBlanks = document.querySelectorAll('.blank.filled').length;
+            if (filledBlanks === 4) completed++;
+            
+            // Check Exercise 3 completion (personal answers)
+            let savedCount = 0;
+            for (let i = 1; i <= 3; i++) {
+                if (localStorage.getItem(`transport_answer_${i}`)) {
+                    savedCount++;
+                }
+            }
+            if (savedCount === 3) completed++;
+            
+            // Update UI
+            document.getElementById('completed-exercises').textContent = completed;
+            const percent = Math.round((completed / 3) * 100);
+            document.getElementById('progress-percent').textContent = `${percent}%`;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+            
+            // Color change based on progress
+            if (percent === 100) {
+                document.getElementById('progress-bar').style.background = 'linear-gradient(to right, #4caf50, #2e7d32)';
+            } else if (percent >= 66) {
+                document.getElementById('progress-bar').style.background = 'linear-gradient(to right, #8bc34a, #4caf50)';
+            } else if (percent >= 33) {
+                document.getElementById('progress-bar').style.background = 'linear-gradient(to right, #ffb74d, #ff9800)';
+            }
+        }
+    </script>
+</body>
+</html>

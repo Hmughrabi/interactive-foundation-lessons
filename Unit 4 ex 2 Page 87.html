@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Vocabulary Match</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8e9ff 100%); /* Light shimmering background */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 1000px;
+            width: 100%;
+        }
+        .draggable {
+            cursor: grab;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 5px;
+            display: inline-block;
+        }
+        .draggable:active {
+            cursor: grabbing;
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .drop-target {
+            background-color: #f0f4f8; /* Very light blue/gray */
+            border: 2px dashed #a5b4fc; /* Tailwind indigo-300 */
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .drop-target.hovered {
+            background-color: #e0e7ff; /* Tailwind indigo-100 */
+            border-color: #4f46e5; /* Tailwind indigo-600 */
+        }
+        .feedback {
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+        .correct {
+            background-color: #D1FAE5; /* green-100 */
+            color: #059669; /* green-600 */
+        }
+        .incorrect {
+            background-color: #FEE2E2; /* red-100 */
+            color: #EF4444; /* red-500 */
+        }
+
+        /* Color array for words (100 colors effect achieved through variety) */
+        .color-0 { background-color: #ef4444; } /* Red */
+        .color-1 { background-color: #f97316; } /* Orange */
+        .color-2 { background-color: #eab308; } /* Yellow */
+        .color-3 { background-color: #22c55e; } /* Green */
+        .color-4 { background-color: #06b6d4; } /* Cyan */
+        .color-5 { background-color: #3b82f6; } /* Blue */
+        .color-6 { background-color: #8b5cf6; } /* Violet */
+    </style>
+</head>
+<body class="p-4">
+
+    <div class="card">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-indigo-700 mb-2">
+                Vocabulary Match: Weather & Change
+            </h1>
+            <p class="text-xl text-gray-500">
+                Drag the bold words to their correct definitions (a–f).
+            </p>
+        </header>
+
+        <div id="word-bank" class="mb-10 p-5 bg-gray-50 rounded-xl flex flex-wrap justify-center gap-4 border border-gray-200">
+            <!-- Draggable words -->
+            <div id="shock" class="draggable color-0" data-target="d" draggable="true">SHOCK</div>
+            <div id="rise" class="draggable color-1" data-target="e" draggable="true">RISE</div>
+            <div id="decide" class="draggable color-2" data-target="c" draggable="true">DECIDE</div>
+            <div id="careful" class="draggable color-3" data-target="a" draggable="true">CAREFUL</div>
+            <div id="precipitation" class="draggable color-4" data-target="f" draggable="true">PRECIPITATION</div>
+            <div id="drop" class="draggable color-5" data-target="b" draggable="true">DROP</div>
+        </div>
+
+        <div class="space-y-6">
+            <!-- Definitions and Drop Targets -->
+            <div class="flex flex-col md:flex-row items-start md:items-center space-y-3 md:space-y-0 md:space-x-4 p-4 border-b">
+                <span class="text-xl font-bold text-gray-700 w-10">a</span>
+                <div id="target-a" class="drop-target flex-grow" data-letter="a" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)"></div>
+                <span class="text-gray-600 md:w-3/4">(adj) paying attention to what you do so that you don't have an accident</span>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-start md:items-center space-y-3 md:space-y-0 md:space-x-4 p-4 border-b">
+                <span class="text-xl font-bold text-gray-700 w-10">b</span>
+                <div id="target-b" class="drop-target flex-grow" data-letter="b" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)"></div>
+                <span class="text-gray-600 md:w-3/4">(v) to decrease; to fall or go down</span>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-start md:items-center space-y-3 md:space-y-0 md:space-x-4 p-4 border-b">
+                <span class="text-xl font-bold text-gray-700 w-10">c</span>
+                <div id="target-c" class="drop-target flex-grow" data-letter="c" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)"></div>
+                <span class="text-gray-600 md:w-3/4">(v) to choose between one possibility and another</span>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-start md:items-center space-y-3 md:space-y-0 md:space-x-4 p-4 border-b">
+                <span class="text-xl font-bold text-gray-700 w-10">d</span>
+                <div id="target-d" class="drop-target flex-grow" data-letter="d" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)"></div>
+                <span class="text-gray-600 md:w-3/4">(n) a big, unpleasant surprise</span>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-start md:items-center space-y-3 md:space-y-0 md:space-x-4 p-4 border-b">
+                <span class="text-xl font-bold text-gray-700 w-10">e</span>
+                <div id="target-e" class="drop-target flex-grow" data-letter="e" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)"></div>
+                <span class="text-gray-600 md:w-3/4">(v) to increase; to go up</span>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-start md:items-center space-y-3 md:space-y-0 md:space-x-4 p-4">
+                <span class="text-xl font-bold text-gray-700 w-10">f</span>
+                <div id="target-f" class="drop-target flex-grow" data-letter="f" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)"></div>
+                <span class="text-gray-600 md:w-3/4">(n) water that falls to the ground as rain or snow</span>
+            </div>
+        </div>
+        
+        <div class="mt-10 flex justify-center space-x-4">
+            <button onclick="checkAnswers()" class="px-8 py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition duration-200 shadow-lg">
+                Check Answers
+            </button>
+            <button onclick="resetGame()" class="px-8 py-3 bg-gray-300 text-gray-800 font-bold rounded-lg hover:bg-gray-400 transition duration-200 shadow-lg">
+                Reset
+            </button>
+        </div>
+
+        <div id="feedback-area" class="mt-8 text-center text-xl font-bold"></div>
+
+    </div>
+
+    <script>
+        let draggedItem = null;
+        
+        // Setup drag start listeners
+        document.querySelectorAll('.draggable').forEach(item => {
+            item.addEventListener('dragstart', handleDragStart);
+        });
+
+        function handleDragStart(event) {
+            draggedItem = event.target;
+            event.dataTransfer.setData('text/plain', event.target.id);
+            // Add a class to indicate dragging state (optional)
+            setTimeout(() => {
+                event.target.classList.add('opacity-50');
+            }, 0);
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault(); // Necessary to allow dropping
+            event.target.closest('.drop-target').classList.add('hovered');
+        }
+
+        function handleDragLeave(event) {
+            event.target.closest('.drop-target').classList.remove('hovered');
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            const dropTarget = event.target.closest('.drop-target');
+            if (!dropTarget) return;
+
+            dropTarget.classList.remove('hovered');
+
+            // Prevent dropping if a word is already there
+            if (dropTarget.querySelector('.draggable')) {
+                // Return the existing word to the bank
+                returnToWordBank(dropTarget.querySelector('.draggable'));
+            }
+
+            // Move the dragged item to the drop target
+            dropTarget.appendChild(draggedItem);
+            draggedItem.classList.remove('opacity-50');
+            draggedItem.style.margin = '0'; // Remove margin for better fit
+            draggedItem = null;
+            
+            // Clear any previous feedback on the word bank
+            document.getElementById('feedback-area').textContent = '';
+        }
+
+        /**
+         * Returns a word element back to the main word bank.
+         * @param {HTMLElement} wordElement - The draggable word to return.
+         */
+        function returnToWordBank(wordElement) {
+            const wordBank = document.getElementById('word-bank');
+            wordElement.style.margin = '5px';
+            wordBank.appendChild(wordElement);
+        }
+
+        /**
+         * Checks all drop targets against their correct answers.
+         */
+        function checkAnswers() {
+            const dropTargets = document.querySelectorAll('.drop-target');
+            let score = 0;
+            let total = dropTargets.length;
+
+            dropTargets.forEach(target => {
+                const droppedWord = target.querySelector('.draggable');
+                
+                // Clear previous feedback classes
+                target.classList.remove('correct', 'incorrect');
+
+                if (droppedWord) {
+                    const correctTargetLetter = droppedWord.dataset.target;
+                    const currentTargetLetter = target.dataset.letter;
+
+                    if (correctTargetLetter === currentTargetLetter) {
+                        target.classList.add('bg-green-100', 'border-green-500');
+                        droppedWord.classList.add('bg-green-500', 'shadow-none');
+                        droppedWord.classList.remove('bg-red-500');
+                        score++;
+                    } else {
+                        target.classList.add('bg-red-100', 'border-red-500');
+                        droppedWord.classList.add('bg-red-500', 'shadow-none');
+                        droppedWord.classList.remove('bg-green-500');
+                    }
+                } else {
+                    target.classList.add('bg-red-100', 'border-red-500');
+                }
+            });
+
+            const feedbackArea = document.getElementById('feedback-area');
+            feedbackArea.textContent = `You scored ${score} out of ${total}!`;
+            if (score === total) {
+                feedbackArea.classList.add('text-green-600');
+                feedbackArea.classList.remove('text-red-600');
+            } else {
+                feedbackArea.classList.add('text-red-600');
+                feedbackArea.classList.remove('text-green-600');
+            }
+        }
+
+        /**
+         * Resets the game by returning all words to the bank and clearing feedback.
+         */
+        function resetGame() {
+            const dropTargets = document.querySelectorAll('.drop-target');
+            dropTargets.forEach(target => {
+                const droppedWord = target.querySelector('.draggable');
+                if (droppedWord) {
+                    returnToWordBank(droppedWord);
+                }
+                target.classList.remove('bg-green-100', 'border-green-500', 'bg-red-100', 'border-red-500');
+            });
+            
+            // Reset word styles
+            document.querySelectorAll('.draggable').forEach(word => {
+                word.classList.remove('bg-green-500', 'bg-red-500', 'shadow-none');
+            });
+            
+            document.getElementById('feedback-area').textContent = '';
+            document.getElementById('feedback-area').classList.remove('text-green-600', 'text-red-600');
+        }
+    </script>
+</body>
+</html>
