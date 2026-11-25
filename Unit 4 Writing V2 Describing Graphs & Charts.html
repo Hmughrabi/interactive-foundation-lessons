@@ -1,860 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing Skills: Describing Graphs & Charts</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-
-        header {
-            background: linear-gradient(135deg, #2c3e50, #4a6491);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .subtitle {
-            font-size: 1.4rem;
-            opacity: 0.9;
-        }
-
-        .nav-tabs {
-            display: flex;
-            background: #34495e;
-            padding: 0;
-            flex-wrap: wrap;
-        }
-
-        .tab {
-            padding: 15px 25px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            border-bottom: 3px solid transparent;
-        }
-
-        .tab:hover {
-            background: #2c3e50;
-        }
-
-        .tab.active {
-            background: #2c3e50;
-            border-bottom: 3px solid #3498db;
-        }
-
-        .tab-content {
-            display: none;
-            padding: 30px;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            margin-bottom: 25px;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h2 {
-            color: #2575fc;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e0e0e0;
-            display: flex;
-            align-items: center;
-        }
-
-        .card h2 i {
-            margin-right: 10px;
-            font-size: 1.5rem;
-        }
-
-        .highlight {
-            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        .vocabulary-list {
-            background: #e3f2fd;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-        }
-
-        .vocabulary-item {
-            padding: 8px 0;
-            border-bottom: 1px dashed #90caf9;
-        }
-
-        .writing-sample {
-            background: #fff8e1;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-            border-left: 5px solid #ffc107;
-        }
-
-        .interactive-section {
-            background: #e8f5e9;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-block;
-            margin: 10px 5px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .exercise {
-            margin: 20px 0;
-            padding: 15px;
-            background: white;
-            border-radius: 10px;
-            border: 2px solid #e0e0e0;
-        }
-
-        .question {
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        .options {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
-
-        .option {
-            padding: 12px;
-            background: #f5f5f5;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .option:hover {
-            background: #e3f2fd;
-            border-color: #2196f3;
-        }
-
-        .option.correct {
-            background: #e8f5e9;
-            border-color: #4caf50;
-            color: #2e7d32;
-        }
-
-        .option.incorrect {
-            background: #ffebee;
-            border-color: #f44336;
-            color: #c62828;
-        }
-
-        .feedback {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            display: none;
-        }
-
-        .feedback.correct {
-            background: #e8f5e9;
-            color: #2e7d32;
-            display: block;
-        }
-
-        .feedback.incorrect {
-            background: #ffebee;
-            color: #c62828;
-            display: block;
-        }
-
-        .graph-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        @media (max-width: 600px) {
-            .graph-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .graph {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .graph-placeholder {
-            height: 200px;
-            background: linear-gradient(135deg, #a8edea, #fed6e3);
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #555;
-            margin: 10px 0;
-        }
-
-        .graph-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #2575fc;
-        }
-
-        .writing-steps {
-            background: #f3e5f5;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .step {
-            display: flex;
-            margin-bottom: 15px;
-            align-items: flex-start;
-        }
-
-        .step-number {
-            background: #7b1fa2;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        .fill-blank {
-            background: #fff3e0;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-
-        .blank {
-            display: inline-block;
-            width: 120px;
-            border-bottom: 2px solid #333;
-            margin: 0 5px;
-            text-align: center;
-        }
-
-        .word-bank {
-            background: #e1f5fe;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-
-        .word-option {
-            display: inline-block;
-            padding: 8px 15px;
-            margin: 5px;
-            background: #b3e5fc;
-            border-radius: 20px;
-            cursor: move;
-        }
-
-        .matching-exercise {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .matching-item {
-            padding: 10px;
-            background: #f5f5f5;
-            border-radius: 8px;
-            margin: 5px 0;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #2c3e50;
-            color: white;
-            margin-top: 30px;
-        }
-
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .two-column {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Describing Graphs & Charts | Foundation English</title>
+<style>
+:root{--navy:#17324d;--blue:#2864a5;--teal:#168b88;--gold:#f2b84b;--ink:#243447;--muted:#627386;--paper:#f4f7fb;--white:#fff;--green:#247a50;--red:#b33b43;--line:#dce5ef}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#eaf2fb,#f7f8fc);font-family:Arial,Helvetica,sans-serif;color:var(--ink);line-height:1.55}
+.wrap{max-width:1120px;margin:24px auto;padding:0 16px}.hero{background:linear-gradient(120deg,var(--navy),#286b88);color:white;border-radius:22px;padding:30px 32px;box-shadow:0 12px 30px #17324d22}
+.eyebrow{text-transform:uppercase;letter-spacing:1.5px;font-size:.78rem;font-weight:700;color:#c8e8f1}.hero h1{font-size:clamp(1.8rem,4vw,2.7rem);margin:8px 0}.hero p{margin:4px 0;color:#e6f2f7}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.tab{border:0;border-radius:999px;padding:11px 18px;background:white;color:var(--navy);font-weight:700;cursor:pointer;box-shadow:0 2px 8px #17324d12}.tab.active,.tab:hover{background:var(--teal);color:white}
+.panel{display:none;background:white;border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,28px);box-shadow:0 8px 24px #17324d0d}.panel.active{display:block}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.55rem}h3{color:var(--blue);margin:18px 0 8px}.lead{color:var(--muted);margin-top:0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{border:1px solid var(--line);border-radius:15px;padding:18px;background:#fbfdff}.chart{width:100%;height:auto;display:block;background:#fbfdff;border-radius:12px}.note{background:#fff7e5;border-left:4px solid var(--gold);padding:12px 14px;border-radius:8px;margin:14px 0}.good{background:#eaf7f0;border-left-color:var(--green)}.small{font-size:.92rem;color:var(--muted)}
+.pill{display:inline-block;background:#e7f1fb;color:#24517e;padding:4px 9px;border-radius:999px;font-size:.8rem;font-weight:700;margin:3px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.step{background:#eef5fb;padding:14px;border-radius:12px}.step b{display:block;color:var(--blue);margin-bottom:4px}
+.vocab{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.word{padding:12px;border:1px solid var(--line);border-radius:10px;background:#fbfdff}.word b{color:var(--blue)}
+.question{border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0}.question p{font-weight:700;margin:0 0 10px}.choices{display:grid;gap:8px}.choice{display:block;text-align:left;width:100%;border:1px solid var(--line);background:#f8fafc;padding:10px 12px;border-radius:9px;cursor:pointer;color:var(--ink)}.choice:hover{border-color:var(--teal);background:#eef9f8}.choice.selected{border:2px solid var(--blue);background:#edf4ff}.choice.correct{border:2px solid var(--green);background:#eaf7f0}.choice.wrong{border:2px solid var(--red);background:#fff0f0}
+.feedback{margin-top:9px;font-weight:700}.feedback.ok{color:var(--green)}.feedback.no{color:var(--red)}
+button.action{border:0;background:var(--blue);color:white;padding:11px 17px;border-radius:9px;font-weight:700;cursor:pointer;margin:7px 6px 4px 0}button.secondary{background:#eaf0f6;color:var(--navy)}button.action:hover{filter:brightness(1.08)}
+select,input,textarea{font:inherit;padding:10px;border:1px solid #bdcad8;border-radius:8px;width:100%;background:white}textarea{min-height:170px;resize:vertical}.matchrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center;margin:10px 0}.matchrow label{font-weight:600}.result{font-weight:700;margin:10px 0}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:18px}
+@media(max-width:720px){.grid,.steps,.vocab{grid-template-columns:1fr}.hero{padding:23px}.matchrow{grid-template-columns:1fr}}
+@media print{body{background:white}.wrap{margin:0;max-width:none}.hero{background:white;color:#111;box-shadow:none;border:1px solid #aaa}.hero p,.eyebrow{color:#333}.nav,button{display:none!important}.panel{display:block!important;box-shadow:none;border:0;page-break-inside:avoid}.card,.question{break-inside:avoid}}
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📊 Describing Graphs & Charts</h1>
-            <p class="subtitle">Master the skill of writing about data and trends</p>
-        </header>
+<div class="wrap">
+<header class="hero">
+ <div class="eyebrow">Foundation English · Writing Skills</div>
+ <h1>Describing Graphs &amp; Charts</h1>
+ <p>Learn how to identify key information, compare figures and write a clear description of data.</p>
+</header>
+<nav class="nav" aria-label="Lesson sections">
+ <button class="tab active" data-panel="lesson">📊 Lesson</button>
+ <button class="tab" data-panel="vocabulary">📚 Vocabulary</button>
+ <button class="tab" data-panel="practice">✍️ Practice</button>
+ <button class="tab" data-panel="quiz">🎯 Final Quiz</button>
+</nav>
 
-        <div class="nav-tabs">
-            <div class="tab active" data-tab="lesson">📖 Lesson</div>
-            <div class="tab" data-tab="vocabulary">📚 Vocabulary</div>
-            <div class="tab" data-tab="practice">✍️ Practice</div>
-            <div class="tab" data-tab="quiz">🎯 Quiz</div>
-        </div>
+<section class="panel active" id="lesson">
+ <h2>1. Understanding the Data</h2>
+ <p class="lead">The charts describe rainfall and temperature in Tehran during one year. Study the figures before reading the model answer.</p>
+ <div class="grid">
+  <article class="card">
+   <h3>Bar chart · Rainfall in Tehran (mm)</h3>
+   <svg class="chart" viewBox="0 0 500 270" role="img" aria-label="Selected rainfall figures: June 2 millimetres, July 2 millimetres, December 40 millimetres">
+    <line x1="65" y1="220" x2="465" y2="220" stroke="#8294a8" stroke-width="2"/>
+    <line x1="65" y1="35" x2="65" y2="220" stroke="#8294a8" stroke-width="2"/>
+    <g fill="#617386" font-size="12" text-anchor="end"><text x="56" y="224">0</text><text x="56" y="178">10</text><text x="56" y="132">20</text><text x="56" y="86">30</text><text x="56" y="40">40</text></g>
+    <g stroke="#e1e8f0" stroke-dasharray="4 4"><line x1="65" y1="174" x2="465" y2="174"/><line x1="65" y1="128" x2="465" y2="128"/><line x1="65" y1="82" x2="465" y2="82"/><line x1="65" y1="36" x2="465" y2="36"/></g>
+    <rect x="115" y="210.8" width="65" height="9.2" rx="5" fill="#35a7a0"/><rect x="235" y="210.8" width="65" height="9.2" rx="5" fill="#35a7a0"/><rect x="355" y="36" width="65" height="184" rx="5" fill="#2864a5"/>
+    <g fill="#243447" font-size="13" font-weight="700" text-anchor="middle"><text x="147" y="199">2 mm</text><text x="267" y="199">2 mm</text><text x="387" y="26">40 mm</text></g>
+    <g fill="#526579" font-size="13" text-anchor="middle"><text x="147" y="242">June</text><text x="267" y="242">July</text><text x="387" y="242">December</text></g>
+   </svg>
+   <p class="small">Selected figures from the lesson: December has the highest rainfall (40 mm). June and July have the lowest rainfall (2 mm).</p>
+  </article>
+  <article class="card">
+   <h3>Line graph · Temperature in Tehran (°C)</h3>
+   <svg class="chart" viewBox="0 0 500 270" role="img" aria-label="Selected temperatures: January 10 degrees, February 10 degrees, December 10 degrees, July 40 degrees">
+    <line x1="65" y1="220" x2="465" y2="220" stroke="#8294a8" stroke-width="2"/><line x1="65" y1="35" x2="65" y2="220" stroke="#8294a8" stroke-width="2"/>
+    <g fill="#617386" font-size="12" text-anchor="end"><text x="56" y="224">0</text><text x="56" y="178">10</text><text x="56" y="132">20</text><text x="56" y="86">30</text><text x="56" y="40">40</text></g>
+    <g stroke="#e1e8f0" stroke-dasharray="4 4"><line x1="65" y1="174" x2="465" y2="174"/><line x1="65" y1="128" x2="465" y2="128"/><line x1="65" y1="82" x2="465" y2="82"/><line x1="65" y1="36" x2="465" y2="36"/></g>
+    <polyline points="115,174 205,174 295,36 405,174" fill="none" stroke="#e18b36" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#e18b36" stroke="white" stroke-width="2"><circle cx="115" cy="174" r="7"/><circle cx="205" cy="174" r="7"/><circle cx="295" cy="36" r="7"/><circle cx="405" cy="174" r="7"/></g>
+    <g fill="#243447" font-size="13" font-weight="700" text-anchor="middle"><text x="115" y="158">10°C</text><text x="205" y="158">10°C</text><text x="295" y="24">40°C</text><text x="405" y="158">10°C</text></g>
+    <g fill="#526579" font-size="13" text-anchor="middle"><text x="115" y="242">January</text><text x="205" y="242">February</text><text x="295" y="242">July</text><text x="405" y="242">December</text></g>
+   </svg>
+   <p class="small">Selected figures from the lesson: July is the hottest month (40°C). January, February and December share the minimum (10°C).</p>
+  </article>
+ </div>
+ <div class="note"><b>Important:</b> These charts display the exact numerical figures stated in the original lesson. The other comparisons in the lesson are presented in words because the original page does not provide a complete set of monthly numerical values.</div>
+ <h3>A simple writing plan</h3>
+ <div class="steps">
+  <div class="step"><b>1. What?</b>Identify what the graphs show: rainfall and temperatures.</div>
+  <div class="step"><b>2. Where?</b>Identify the place: Tehran.</div>
+  <div class="step"><b>3. When?</b>Identify the time: over one year.</div>
+ </div>
+ <h3>Model Answer</h3>
+ <div class="card">
+  <p>The graphs show rainfall and temperatures in Tehran over one year.</p>
+  <p>First, the bar chart shows the average rainfall in millimetres. The highest rainfall is in December. It reaches 40 mm. December is the rainiest month. The lowest rainfall is in June and July. It falls to 2 mm. June and July are the driest months. July is drier than August. November is rainier than September.</p>
+  <p>Next, the line graph shows the average temperature in degrees Celsius. The maximum temperature is in July. It rises to 40°C, making July the hottest month. The minimum temperature is 10°C in January, February and December. These are the coolest months. August is hotter than October. The temperature in March is as warm as that in November.</p>
+  <p>Overall, July is the hottest and one of the driest months, while December is the rainiest month. The figures show clear differences between the seasons.</p>
+ </div>
+ <div class="note good"><b>Remember:</b> Describe what the figures show. Do not add opinions or information that cannot be seen in the graphs.</div>
+</section>
 
-        <!-- LESSON TAB -->
-        <div id="lesson" class="tab-content active">
-            <div class="two-column">
-                <div class="card">
-                    <h2><i>📈</i> Understanding the Data</h2>
-                    
-                    <div class="graph-container">
-                        <div class="graph">
-                            <div class="graph-title">Rainfall in Tehran (mm)</div>
-                            <div class="graph-placeholder">
-                                <p>Bar Chart: Monthly Rainfall</p>
-                                <p>Highest: December (40mm)</p>
-                                <p>Lowest: June (3mm)</p>
-                            </div>
-                        </div>
-                        
-                        <div class="graph">
-                            <div class="graph-title">Temperatures in Tehran (°C)</div>
-                            <div class="graph-placeholder">
-                                <p>Line Graph: Monthly Temperatures</p>
-                                <p>Hottest: July (40°C)</p>
-                                <p>Coolest: January (10°C)</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="writing-steps">
-                        <h3>Writing Plan:</h3>
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div><span class="highlight">What?</span> rainfall and temperatures</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div><span class="highlight">Where?</span> in Tehran</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div><span class="highlight">When?</span> over one year</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h2><i>✍️</i> Model Answer</h2>
-                    
-                    <div class="writing-sample">
-                        <p>The graphs show <span class="highlight">rainfall and temperatures</span> in Tehran over a year.</p>
-                        <p>First, the <span class="highlight">bar chart</span> shows the average <span class="highlight">rainfall in millimeters</span>. The <span class="highlight">highest rainfall</span> is in December. It <span class="highlight">reaches 40 mm</span>. December is the <span class="highlight">rainiest month</span>. The <span class="highlight">lowest rainfall</span> is in June and July. It <span class="highlight">falls to 2mm</span>. June and July are the <span class="highlight">driest months</span>. July is <span class="highlight">drier than August</span>. November is <span class="highlight">rainier than September</span>.</p>
-                        <p>Finally, the <span class="highlight">line graph</span> shows the average <span class="highlight">temperature in degrees Celsius</span>. The <span class="highlight">maximum temperature</span> is in July. It <span class="highlight">rises to 40 °C</span>. The <span class="highlight">hottest month</span> is July. The <span class="highlight">minimum temperature</span> is in January, February and December. It <span class="highlight">drops to 10 °C</span>. They are the <span class="highlight">warmest months</span>. August is <span class="highlight">hotter than October</span>. The temperature in March is <span class="highlight">as warm as</span> that in November.</p>
-                        <p>Overall, it seems that Tehran has <span class="highlight">extreme weather</span> in July. There can be <span class="highlight">heatwaves</span>. The <span class="highlight">best time to visit</span> this city is in March and November because the weather is warm and rainy.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<section class="panel" id="vocabulary">
+ <h2>2. Key Vocabulary</h2><p class="lead">Learn these words and expressions. They help you describe numbers and compare information.</p>
+ <div class="vocab">
+  <div class="word"><b>Rainfall</b><br>The amount of rain that falls.</div>
+  <div class="word"><b>Temperature</b><br>How hot or cold something is.</div>
+  <div class="word"><b>Highest / Maximum</b><br>The greatest value.</div>
+  <div class="word"><b>Lowest / Minimum</b><br>The smallest value.</div>
+  <div class="word"><b>Wettest / Rainiest</b><br>With the most rain.</div>
+  <div class="word"><b>Driest</b><br>With the least rain.</div>
+  <div class="word"><b>Hottest</b><br>With the highest temperature.</div>
+  <div class="word"><b>Coolest</b><br>With the lowest temperature.</div>
+  <div class="word"><b>Reaches</b><br>Gets to a particular number.</div>
+  <div class="word"><b>Falls to / Drops to</b><br>Goes down to a particular number.</div>
+  <div class="word"><b>Rainier than</b><br>Having more rain than another place or time.</div>
+  <div class="word"><b>As warm as</b><br>Having the same temperature as something else.</div>
+ </div>
+ <h3>Vocabulary Practice</h3>
+ <p>Choose the correct word to complete each sentence.</p>
+ <div class="question" data-answer="highest"><p>1. The ______ temperature was recorded in July.</p><select><option value="">Choose an answer</option><option>lowest</option><option>highest</option><option>driest</option></select><div class="feedback"></div></div>
+ <div class="question" data-answer="rainiest"><p>2. December is the ______ month, with 40 mm of rainfall.</p><select><option value="">Choose an answer</option><option>coolest</option><option>rainiest</option><option>hottest</option></select><div class="feedback"></div></div>
+ <div class="question" data-answer="drops"><p>3. The temperature ______ to 10°C in the coolest months.</p><select><option value="">Choose an answer</option><option>rises</option><option>reaches</option><option>drops</option></select><div class="feedback"></div></div>
+ <div class="question" data-answer="drier"><p>4. July is ______ than August.</p><select><option value="">Choose an answer</option><option>rainier</option><option>drier</option><option>cooler</option></select><div class="feedback"></div></div>
+ <button class="action" onclick="checkSelects()">Check Answers</button><button class="action secondary" onclick="resetSelects()">Try Again</button><div id="vocabScore" class="result" aria-live="polite"></div>
+ <h3>Sentence Patterns: Match the beginnings and endings</h3>
+ <div id="matching">
+  <div class="matchrow"><label for="m1">1. The graph shows ...</label><select id="m1"><option value="">Choose an ending</option><option value="a">that July is the hottest month.</option><option value="b">rainfall patterns over one year.</option><option value="c">is in December.</option><option value="d">winter has lower temperatures.</option></select></div>
+  <div class="matchrow"><label for="m2">2. The highest value ...</label><select id="m2"><option value="">Choose an ending</option><option value="a">that July is the hottest month.</option><option value="b">rainfall patterns over one year.</option><option value="c">is in December.</option><option value="d">winter has lower temperatures.</option></select></div>
+  <div class="matchrow"><label for="m3">3. Compared to summer, ...</label><select id="m3"><option value="">Choose an ending</option><option value="a">that July is the hottest month.</option><option value="b">rainfall patterns over one year.</option><option value="c">is in December.</option><option value="d">winter has lower temperatures.</option></select></div>
+  <div class="matchrow"><label for="m4">4. Overall, we can see ...</label><select id="m4"><option value="">Choose an ending</option><option value="a">that July is the hottest month.</option><option value="b">rainfall patterns over one year.</option><option value="c">is in December.</option><option value="d">winter has lower temperatures.</option></select></div>
+ </div>
+ <button class="action" onclick="checkMatching()">Check Matching</button><button class="action secondary" onclick="resetMatching()">Reset</button><div id="matchScore" class="result" aria-live="polite"></div>
+</section>
 
-        <!-- VOCABULARY TAB -->
-        <div id="vocabulary" class="tab-content">
-            <div class="two-column">
-                <div class="card">
-                    <h2><i>📝</i> Key Vocabulary</h2>
-                    
-                    <div class="vocabulary-list">
-                        <div class="vocabulary-item"><span class="highlight">Rainfall</span> - the amount of rain that falls</div>
-                        <div class="vocabulary-item"><span class="highlight">Temperatures</span> - how hot or cold it is</div>
-                        <div class="vocabulary-item"><span class="highlight">Highest/Maximum</span> - the most</div>
-                        <div class="vocabulary-item"><span class="highlight">Lowest/Minimum</span> - the least</div>
-                        <div class="vocabulary-item"><span class="highlight">Wettest</span> - with the most rain</div>
-                        <div class="vocabulary-item"><span class="highlight">Driest</span> - with the least rain</div>
-                        <div class="vocabulary-item"><span class="highlight">Hottest</span> - with the highest temperature</div>
-                        <div class="vocabulary-item"><span class="highlight">Coolest</span> - with the lowest temperature</div>
-                        <div class="vocabulary-item"><span class="highlight">Reaches</span> - arrives at, gets to</div>
-                        <div class="vocabulary-item"><span class="highlight">Falls to</span> - goes down to</div>
-                    </div>
+<section class="panel" id="practice">
+ <h2>3. Writing Practice</h2><p class="lead">Answer the questions using the information in the charts and model answer.</p>
+ <div id="practiceQuestions">
+  <div class="question" data-answer="December"><p>1. Which month has the highest rainfall?</p><div class="choices"><button class="choice">December</button><button class="choice">January</button><button class="choice">July</button><button class="choice">March</button></div><div class="feedback"></div></div>
+  <div class="question" data-answer="40°C"><p>2. What is the temperature in July?</p><div class="choices"><button class="choice">10°C</button><button class="choice">25°C</button><button class="choice">40°C</button><button class="choice">15°C</button></div><div class="feedback"></div></div>
+  <div class="question" data-answer="rainier"><p>3. Complete the sentence: November is ______ than September.</p><div class="choices"><button class="choice">drier</button><button class="choice">rainier</button><button class="choice">colder</button><button class="choice">hotter</button></div><div class="feedback"></div></div>
+  <div class="question" data-answer="January, February and December"><p>4. Which months have the minimum temperature of 10°C?</p><div class="choices"><button class="choice">Only January</button><button class="choice">January, February and December</button><button class="choice">July and August</button><button class="choice">All winter months</button></div><div class="feedback"></div></div>
+  <div class="question" data-answer="July is the hottest month and June and July are the driest months"><p>5. Which statement is supported by the information?</p><div class="choices"><button class="choice">It rains heavily every month</button><button class="choice">July is the hottest month and June and July are the driest months</button><button class="choice">December is the hottest month</button><button class="choice">All months have the same temperature</button></div><div class="feedback"></div></div>
+ </div>
+ <button class="action" onclick="checkPractice()">Check Answers</button><button class="action secondary" onclick="resetPractice()">Reset Practice</button><div id="practiceScore" class="result" aria-live="polite"></div>
+ <h3>Write Your Own Description</h3>
+ <p>Write a short paragraph describing the rainfall and temperatures in Tehran. Try to include an introduction, key figures, comparisons and an overall statement.</p>
+ <textarea id="studentWriting" placeholder="The graphs show ..."></textarea>
+ <button class="action" onclick="saveWriting()">Save My Writing</button><button class="action secondary" onclick="clearWriting()">Clear</button><button class="action secondary" onclick="printPage()">Print Lesson</button>
+ <div id="writingFeedback" class="note" aria-live="polite">After writing, select “Review My Writing” for a checklist based on the lesson objectives. This is a self-check, not an automatic AI assessment.</div>
+ <button class="action" onclick="reviewWriting()">Review My Writing</button>
+</section>
 
-                    <div class="fill-blank">
-                        <h3>Vocabulary Practice</h3>
-                        <p>Complete the sentences with the correct words:</p>
-                        <p>1. The <span class="blank" data-answer="highest"></span> temperature was recorded in July.</p>
-                        <p>2. December is the <span class="blank" data-answer="rainiest"></span> month with 40mm of rainfall.</p>
-                        <p>3. The temperature <span class="blank" data-answer="drops"></span> to 10°C in winter.</p>
-                        <p>4. July is <span class="blank" data-answer="drier"></span> than August.</p>
-                        <button class="btn" id="check-blanks">Check Answers</button>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h2><i>🔄</i> Sentence Patterns</h2>
-                    
-                    <div class="writing-steps">
-                        <h3>Useful Expressions:</h3>
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div>"The <span class="highlight">highest</span> rainfall is in..."</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div>"It <span class="highlight">reaches</span> 40mm"</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div>"<span class="highlight">Compared to</span> June, July is..."</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">4</div>
-                            <div>"The temperature <span class="highlight">drops to</span> 10°C"</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">5</div>
-                            <div>"<span class="highlight">Overall</span>, it seems that..."</div>
-                        </div>
-                    </div>
-
-                    <div class="matching-exercise">
-                        <div>
-                            <h4>Beginnings:</h4>
-                            <div class="matching-item" data-match="b">The graph shows...</div>
-                            <div class="matching-item" data-match="d">The highest value...</div>
-                            <div class="matching-item" data-match="a">Compared to summer,...</div>
-                            <div class="matching-item" data-match="c">Overall, we can see...</div>
-                        </div>
-                        <div>
-                            <h4>Endings:</h4>
-                            <div class="matching-item" data-match="a">winter has lower temperatures.</div>
-                            <div class="matching-item" data-match="b">rainfall patterns over one year.</div>
-                            <div class="matching-item" data-match="c">that July is the hottest month.</div>
-                            <div class="matching-item" data-match="d">is in December.</div>
-                        </div>
-                    </div>
-                    <button class="btn" id="check-matching">Check Matching</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- PRACTICE TAB -->
-        <div id="practice" class="tab-content">
-            <div class="card">
-                <h2><i>✍️</i> Writing Practice</h2>
-                
-                <div class="interactive-section">
-                    <h3>Practice Exercises:</h3>
-                    
-                    <div class="exercise">
-                        <div class="question">1. Which month has the highest rainfall?</div>
-                        <div class="options">
-                            <div class="option" data-correct="true">December</div>
-                            <div class="option" data-correct="false">January</div>
-                            <div class="option" data-correct="false">July</div>
-                            <div class="option" data-correct="false">March</div>
-                        </div>
-                        <div class="feedback">Correct! December has 40mm of rainfall, which is the highest.</div>
-                    </div>
-                    
-                    <div class="exercise">
-                        <div class="question">2. What is the temperature in July?</div>
-                        <div class="options">
-                            <div class="option" data-correct="false">10°C</div>
-                            <div class="option" data-correct="false">25°C</div>
-                            <div class="option" data-correct="true">40°C</div>
-                            <div class="option" data-correct="false">15°C</div>
-                        </div>
-                        <div class="feedback">Correct! July reaches 40°C, making it the hottest month.</div>
-                    </div>
-                    
-                    <div class="exercise">
-                        <div class="question">3. Complete the sentence: November is ______ than September.</div>
-                        <div class="options">
-                            <div class="option" data-correct="false">drier</div>
-                            <div class="option" data-correct="true">rainier</div>
-                            <div class="option" data-correct="false">colder</div>
-                            <div class="option" data-correct="false">hotter</div>
-                        </div>
-                        <div class="feedback">Correct! The text states "November is rainier than September."</div>
-                    </div>
-
-                    <div class="exercise">
-                        <div class="question">4. Which months have the minimum temperature of 10°C?</div>
-                        <div class="options">
-                            <div class="option" data-correct="false">Only January</div>
-                            <div class="option" data-correct="true">January, February, and December</div>
-                            <div class="option" data-correct="false">July and August</div>
-                            <div class="option" data-correct="false">All winter months</div>
-                        </div>
-                        <div class="feedback">Correct! January, February, and December all drop to 10°C.</div>
-                    </div>
-
-                    <div class="exercise">
-                        <div class="question">5. What is the main conclusion about Tehran's weather?</div>
-                        <div class="options">
-                            <div class="option" data-correct="false">It rains all year</div>
-                            <div class="option" data-correct="false">Temperatures are always high</div>
-                            <div class="option" data-correct="true">July has extreme weather with heatwaves</div>
-                            <div class="option" data-correct="false">The best time to visit is summer</div>
-                        </div>
-                        <div class="feedback">Correct! The text mentions extreme weather and heatwaves in July.</div>
-                    </div>
-                    
-                    <button id="check-answers" class="btn">Check Answers</button>
-                    <button id="show-all" class="btn">Show All Answers</button>
-                </div>
-
-                <div class="interactive-section">
-                    <h3>Write Your Own Description:</h3>
-                    <p>Use the data to write a paragraph describing Tehran's weather patterns.</p>
-                    <textarea id="writing-practice" rows="6" style="width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #e0e0e0; margin: 10px 0; font-family: inherit;"></textarea>
-                    <button id="save-writing" class="btn">Save My Writing</button>
-                    <button id="clear-writing" class="btn">Clear</button>
-                    <button id="get-feedback" class="btn">Get Feedback</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- QUIZ TAB -->
-        <div id="quiz" class="tab-content">
-            <div class="card">
-                <h2><i>🎯</i> Final Quiz</h2>
-                
-                <div class="interactive-section">
-                    <h3>Test Your Knowledge:</h3>
-                    
-                    <div class="exercise">
-                        <div class="question">1. Which of these is the correct way to describe the highest point on a graph?</div>
-                        <div class="options">
-                            <div class="option" data-correct="false">The rainfall was small in December</div>
-                            <div class="option" data-correct="true">The highest rainfall is in December</div>
-                            <div class="option" data-correct="false">December has normal rainfall</div>
-                            <div class="option" data-correct="false">It rains sometimes in December</div>
-                        </div>
-                        <div class="feedback">Correct! "The highest rainfall is in December" clearly describes the maximum point.</div>
-                    </div>
-                    
-                    <div class="exercise">
-                        <div class="question">2. Choose the best sentence to compare two values:</div>
-                        <div class="options">
-                            <div class="option" data-correct="false">July and August have temperatures</div>
-                            <div class="option" data-correct="false">July is hot and August is hot</div>
-                            <div class="option" data-correct="true">July is hotter than August</div>
-                            <div class="option" data-correct="false">The temperature in July and August</div>
-                        </div>
-                        <div class="feedback">Correct! "July is hotter than August" clearly compares the two months.</div>
-                    </div>
-
-                    <div class="exercise">
-                        <div class="question">3. What should you include when describing data?</div>
-                        <div class="options">
-                            <div class="option" data-correct="false">Only your opinions</div>
-                            <div class="option" data-correct="false">Just the lowest values</div>
-                            <div class="option" data-correct="true">Specific numbers and comparisons</div>
-                            <div class="option" data-correct="false">Only the highest values</div>
-                        </div>
-                        <div class="feedback">Correct! Good descriptions include specific numbers and make comparisons.</div>
-                    </div>
-
-                    <div class="exercise">
-                        <div class="question">4. Which sentence correctly uses "reaches"?</div>
-                        <div class="options">
-                            <div class="option" data-correct="false">The temperature reaches down</div>
-                            <div class="option" data-correct="true">The temperature reaches 40°C</div>
-                            <div class="option" data-correct="false">Reaches the temperature high</div>
-                            <div class="option" data-correct="false">It reaches in July</div>
-                        </div>
-                        <div class="feedback">Correct! "The temperature reaches 40°C" properly uses "reaches" with a specific value.</div>
-                    </div>
-
-                    <div class="exercise">
-                        <div class="question">5. What is the purpose of the conclusion in a graph description?</div>
-                        <div class="options">
-                            <div class="option" data-correct="false">To repeat all the data</div>
-                            <div class="option" data-correct="true">To give an overall observation or recommendation</div>
-                            <div class="option" data-correct="false">To introduce new information</div>
-                            <div class="option" data-correct="false">To list all the months</div>
-                        </div>
-                        <div class="feedback">Correct! The conclusion should provide an overall observation or recommendation based on the data.</div>
-                    </div>
-
-                    <div class="exercise">
-                        <div class="question">6. Which words indicate comparison?</div>
-                        <div class="options">
-                            <div class="option" data-correct="false">is, are, was</div>
-                            <div class="option" data-correct="true">higher than, lower than, similar to</div>
-                            <div class="option" data-correct="false">the, a, an</div>
-                            <div class="option" data-correct="false">in, on, at</div>
-                        </div>
-                        <div class="feedback">Correct! Comparative words like "higher than" and "similar to" are used for comparisons.</div>
-                    </div>
-                    
-                    <button id="check-quiz" class="btn">Check Quiz Answers</button>
-                    <button id="reset-quiz" class="btn">Reset Quiz</button>
-                    
-                    <div id="quiz-score" style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 10px; display: none;">
-                        <h3>Quiz Results</h3>
-                        <p>Your score: <span id="score-value">0</span>/6</p>
-                        <p id="score-message"></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <footer>
-            <p>Educational Resource - Writing Skills: Describing Graphs & Charts</p>
-            <p>Based on: O'Neill, R., & Lewis, M. (2019). Unlock level 2 reading, writing, & critical thinking student's book (2nd ed.). Cambridge University Press.</p>
-        </footer>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Tab functionality
-            const tabs = document.querySelectorAll('.tab');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabId = tab.getAttribute('data-tab');
-                    
-                    // Remove active class from all tabs and contents
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Add active class to clicked tab and corresponding content
-                    tab.classList.add('active');
-                    document.getElementById(tabId).classList.add('active');
-                });
-            });
-
-            // Exercise functionality
-            const options = document.querySelectorAll('.option');
-            const checkButton = document.getElementById('check-answers');
-            const showAllButton = document.getElementById('show-all');
-            const saveWritingButton = document.getElementById('save-writing');
-            const clearWritingButton = document.getElementById('clear-writing');
-            const writingTextarea = document.getElementById('writing-practice');
-            const checkQuizButton = document.getElementById('check-quiz');
-            const resetQuizButton = document.getElementById('reset-quiz');
-            
-            let answersChecked = false;
-            
-            // Load saved writing from localStorage
-            if (localStorage.getItem('studentWriting')) {
-                writingTextarea.value = localStorage.getItem('studentWriting');
-            }
-            
-            options.forEach(option => {
-                option.addEventListener('click', function() {
-                    if (answersChecked) return;
-                    
-                    const isCorrect = this.getAttribute('data-correct') === 'true';
-                    const feedback = this.parentElement.nextElementSibling;
-                    
-                    // Remove any existing classes
-                    this.parentElement.querySelectorAll('.option').forEach(opt => {
-                        opt.classList.remove('correct', 'incorrect');
-                    });
-                    
-                    // Mark this option
-                    this.classList.add(isCorrect ? 'correct' : 'incorrect');
-                    
-                    // Show feedback
-                    feedback.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
-                    feedback.textContent = isCorrect 
-                        ? feedback.textContent 
-                        : "Incorrect. Try again!";
-                });
-            });
-            
-            checkButton.addEventListener('click', function() {
-                answersChecked = true;
-                
-                options.forEach(option => {
-                    const isCorrect = option.getAttribute('data-correct') === 'true';
-                    if (isCorrect) {
-                        option.classList.add('correct');
-                    }
-                });
-                
-                // Show all feedback
-                document.querySelectorAll('.feedback').forEach(feedback => {
-                    const parentExercise = feedback.closest('.exercise');
-                    const hasCorrect = parentExercise.querySelector('.option.correct');
-                    if (hasCorrect) {
-                        feedback.className = 'feedback correct';
-                    }
-                });
-                
-                this.textContent = "Answers Checked!";
-                this.disabled = true;
-            });
-            
-            showAllButton.addEventListener('click', function() {
-                answersChecked = true;
-                
-                options.forEach(option => {
-                    const isCorrect = option.getAttribute('data-correct') === 'true';
-                    option.classList.add(isCorrect ? 'correct' : 'incorrect');
-                });
-                
-                // Show all feedback
-                document.querySelectorAll('.feedback').forEach(feedback => {
-                    feedback.className = 'feedback correct';
-                });
-                
-                checkButton.textContent = "Answers Checked!";
-                checkButton.disabled = true;
-                this.disabled = true;
-            });
-            
-            saveWritingButton.addEventListener('click', function() {
-                localStorage.setItem('studentWriting', writingTextarea.value);
-                alert('Your writing has been saved! You can come back later to continue.');
-            });
-            
-            clearWritingButton.addEventListener('click', function() {
-                if (confirm('Are you sure you want to clear your writing?')) {
-                    writingTextarea.value = '';
-                    localStorage.removeItem('studentWriting');
-                }
-            });
-
-            // Quiz functionality
-            checkQuizButton.addEventListener('click', function() {
-                const quizOptions = document.querySelectorAll('#quiz .option');
-                let score = 0;
-                
-                quizOptions.forEach(option => {
-                    const isCorrect = option.getAttribute('data-correct') === 'true';
-                    if (isCorrect) {
-                        option.classList.add('correct');
-                        if (option.classList.contains('selected')) {
-                            score++;
-                        }
-                    } else if (option.classList.contains('selected')) {
-                        option.classList.add('incorrect');
-                    }
-                });
-                
-                // Show score
-                const scoreElement = document.getElementById('score-value');
-                const scoreMessage = document.getElementById('score-message');
-                const quizScore = document.getElementById('quiz-score');
-                
-                scoreElement.textContent = score;
-                
-                if (score === 6) {
-                    scoreMessage.textContent = "Excellent! You've mastered describing graphs!";
-                } else if (score >= 4) {
-                    scoreMessage.textContent = "Good job! You understand the main concepts.";
-                } else if (score >= 2) {
-                    scoreMessage.textContent = "Keep practicing! Review the lesson and try again.";
-                } else {
-                    scoreMessage.textContent = "Let's review the lesson together. You'll get better with practice!";
-                }
-                
-                quizScore.style.display = 'block';
-                checkQuizButton.disabled = true;
-            });
-            
-            resetQuizButton.addEventListener('click', function() {
-                const quizOptions = document.querySelectorAll('#quiz .option');
-                quizOptions.forEach(option => {
-                    option.classList.remove('correct', 'incorrect', 'selected');
-                });
-                
-                document.getElementById('quiz-score').style.display = 'none';
-                checkQuizButton.disabled = false;
-                answersChecked = false;
-            });
-
-            // Add selection for quiz options
-            document.querySelectorAll('#quiz .option').forEach(option => {
-                option.addEventListener('click', function() {
-                    if (answersChecked) return;
-                    
-                    // Remove selected class from siblings
-                    this.parentElement.querySelectorAll('.option').forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
-                });
-            });
-        });
-    </script>
+<section class="panel" id="quiz">
+ <h2>4. Final Quiz</h2><p class="lead">Choose the best answer. Check your score when you finish.</p>
+ <div id="finalQuiz">
+  <div class="question" data-answer="The highest rainfall is in December"><p>1. Which sentence correctly describes the highest point?</p><div class="choices"><button class="choice">The rainfall was small in December</button><button class="choice">The highest rainfall is in December</button><button class="choice">December has normal rainfall</button><button class="choice">It rains sometimes in December</button></div><div class="feedback"></div></div>
+  <div class="question" data-answer="July is hotter than August"><p>2. Choose the best sentence to compare two values.</p><div class="choices"><button class="choice">July and August have temperatures</button><button class="choice">July is hot and August is hot</button><button class="choice">July is hotter than August</button><button class="choice">The temperature in July and August</button></div><div class="feedback"></div></div>
+  <div class="question" data-answer="Specific numbers and comparisons"><p>3. What should you include when describing data?</p><div class="choices"><button class="choice">Only your opinions</button><button class="choice">Just the lowest values</button><button class="choice">Specific numbers and comparisons</button><button class="choice">Only the highest values</button></div><div class="feedback"></div></div>
+  <div class="question" data-answer="The temperature reaches 40°C"><p>4. Which sentence correctly uses “reaches”?</p><div class="choices"><button class="choice">The temperature reaches down</button><button class="choice">The temperature reaches 40°C</button><button class="choice">Reaches the temperature high</button><button class="choice">It reaches in July</button></div><div class="feedback"></div></div>
+  <div class="question" data-answer="To give an overall observation based on the data"><p>5. What is the purpose of the conclusion in a graph description?</p><div class="choices"><button class="choice">To repeat all the data</button><button class="choice">To give an overall observation based on the data</button><button class="choice">To introduce unrelated information</button><button class="choice">To list all the months</button></div><div class="feedback"></div></div>
+  <div class="question" data-answer="higher than, lower than, similar to"><p>6. Which group of words indicates comparison?</p><div class="choices"><button class="choice">is, are, was</button><button class="choice">higher than, lower than, similar to</button><button class="choice">the, a, an</button><button class="choice">in, on, at</button></div><div class="feedback"></div></div>
+ </div>
+ <button class="action" onclick="checkQuiz()">Check Quiz Answers</button><button class="action secondary" onclick="resetQuiz()">Reset Quiz</button><div id="quizScore" class="result" aria-live="polite"></div>
+</section>
+<footer>Foundation English · Writing Skills: Describing Graphs &amp; Charts</footer>
+</div>
+<script>
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+ document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+ btn.classList.add('active');document.getElementById(btn.dataset.panel).classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+}));
+function checkSelects(){let n=0;document.querySelectorAll('#vocabulary .question').forEach(q=>{let s=q.querySelector('select'),f=q.querySelector('.feedback');if(s.value===q.dataset.answer){n++;f.textContent='Correct!';f.className='feedback ok'}else{f.textContent='Not quite. Try again.';f.className='feedback no'}});document.getElementById('vocabScore').textContent=`You got ${n} out of 4 correct.`}
+function resetSelects(){document.querySelectorAll('#vocabulary select').forEach(s=>s.selectedIndex=0);document.querySelectorAll('#vocabulary .feedback').forEach(f=>{f.textContent='';f.className='feedback'});document.getElementById('vocabScore').textContent=''}
+const matchAnswers={m1:'b',m2:'c',m3:'d',m4:'a'};
+function checkMatching(){let n=0;Object.entries(matchAnswers).forEach(([id,a])=>{let s=document.getElementById(id);if(s.value===a)n++});document.getElementById('matchScore').textContent=`You matched ${n} out of 4 correctly.`}
+function resetMatching(){Object.keys(matchAnswers).forEach(id=>document.getElementById(id).selectedIndex=0);document.getElementById('matchScore').textContent=''}
+function setupChoiceGroups(root){document.querySelectorAll(root+' .question').forEach(q=>q.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>{q.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected','correct','wrong'));b.classList.add('selected');q.querySelector('.feedback').textContent='';q.querySelector('.feedback').className='feedback'})))}
+setupChoiceGroups('#practiceQuestions');setupChoiceGroups('#finalQuiz');
+function markGroup(root,scoreId){let n=0,total=0;document.querySelectorAll(root+' .question').forEach(q=>{total++;let selected=q.querySelector('.choice.selected'),f=q.querySelector('.feedback');q.querySelectorAll('.choice').forEach(b=>{if(b.textContent.trim()===q.dataset.answer)b.classList.add('correct')});if(selected&&selected.textContent.trim()===q.dataset.answer){n++;f.textContent='Correct!';f.className='feedback ok'}else{if(selected)selected.classList.add('wrong');f.textContent='Review the highlighted correct answer.';f.className='feedback no'}});document.getElementById(scoreId).textContent=`Your score: ${n}/${total}`}
+function resetGroup(root,scoreId){document.querySelectorAll(root+' .question').forEach(q=>{q.querySelectorAll('.choice').forEach(b=>b.classList.remove('selected','correct','wrong'));let f=q.querySelector('.feedback');f.textContent='';f.className='feedback'});document.getElementById(scoreId).textContent=''}
+function checkPractice(){markGroup('#practiceQuestions','practiceScore')}function resetPractice(){resetGroup('#practiceQuestions','practiceScore')}
+function checkQuiz(){markGroup('#finalQuiz','quizScore')}function resetQuiz(){resetGroup('#finalQuiz','quizScore')}
+function saveWriting(){let v=document.getElementById('studentWriting').value;try{localStorage.setItem('tehranGraphDescription',v);document.getElementById('writingFeedback').textContent='Your writing has been saved in this browser on this device.'}catch(e){document.getElementById('writingFeedback').textContent='Your browser did not allow local saving. You can copy your paragraph before closing the page.'}}
+function clearWriting(){document.getElementById('studentWriting').value='';document.getElementById('writingFeedback').textContent='The writing area is clear.';try{localStorage.removeItem('tehranGraphDescription')}catch(e){}}
+function reviewWriting(){let t=document.getElementById('studentWriting').value.trim(),checks=[['Mentions both graphs or both types of data',/rainfall/i.test(t)&&/temperature/i.test(t)],['Identifies Tehran and the time period',/tehran/i.test(t)&&/year/i.test(t)],['Includes at least one accurate number',/40\s?mm|2\s?mm|40\s?°?c|10\s?°?c/i.test(t)],['Uses a comparison',/than|as .* as|highest|lowest|maximum|minimum/i.test(t)],['Includes an overall statement',/overall|in general/i.test(t)]];let html='<b>Self-check:</b><ul>'+checks.map(([label,ok])=>`<li>${ok?'✓':'○'} ${label}</li>`).join('')+'</ul><span class="small">Use this checklist to revise your paragraph. It does not generate an AI score.</span>';document.getElementById('writingFeedback').innerHTML=html}
+function printPage(){window.print()}
+try{let saved=localStorage.getItem('tehranGraphDescription');if(saved)document.getElementById('studentWriting').value=saved}catch(e){}
+</script>
 </body>
 </html>
